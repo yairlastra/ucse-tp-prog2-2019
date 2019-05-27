@@ -19,7 +19,32 @@ namespace Mocks
             throw new NotImplementedException();
         }
 
+        public Resultado AltaNota(Nota nota, Sala[] salas, Hijo[] hijos, UsuarioLogueado usuarioLogueado)
+        {
+            throw new NotImplementedException();
+        }
+
         public Resultado AltaPadreMadre(Padre padre, UsuarioLogueado usuarioLogueado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Resultado AsignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Resultado AsignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Resultado DesasignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Resultado DesasignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
         {
             throw new NotImplementedException();
         }
@@ -54,6 +79,16 @@ namespace Mocks
             throw new NotImplementedException();
         }
 
+        public Resultado MarcarNotaComoLeida(Nota nota, UsuarioLogueado usuarioLogueado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Nota[] ObtenerCuadernoComunicaciones(int idPersona, UsuarioLogueado usuarioLogueado)
+        {
+            throw new NotImplementedException();
+        }
+
         public Institucion[] ObtenerInstituciones()
         {
             throw new NotImplementedException();
@@ -61,15 +96,25 @@ namespace Mocks
 
         public string ObtenerNombreGrupo()
         {
-            return $"Aplicación inicial";
+            return "Maxi";
         }
 
-        public Sala[] ObtenerSalasPorInstitucion()
+        public Hijo[] ObtenerPersonas(UsuarioLogueado usuarioLogueado)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Sala[] ObtenerSalasPorInstitucion(UsuarioLogueado usuarioLogueado)
         {
             throw new NotImplementedException();
         }
 
         public UsuarioLogueado ObtenerUsuario(string email, string clave)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Resultado ResponderNota(Nota nota, Comentario nuevoComentario, UsuarioLogueado usuarioLogueado)
         {
             throw new NotImplementedException();
         }

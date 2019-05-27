@@ -8,14 +8,14 @@ using System.Web.Mvc;
 
 namespace WebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private static IServicioWeb servicio = new MockService();
 
         public ActionResult Index()
         {
             ViewBag.Grupo = servicio.ObtenerNombreGrupo();
-
+            
             return View();
         }        
     }
