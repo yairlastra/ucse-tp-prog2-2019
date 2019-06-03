@@ -46,13 +46,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-<<<<<<< HEAD
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-=======
     <Reference Include="MVCGrid, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MVCGrid.Net.1.0.0.61\lib\net40\MVCGrid.dll</HintPath>
->>>>>>> d7bd44fd2f37d914ff604bb3982012026b0688f6
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -107,15 +102,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
-<<<<<<< HEAD
-=======
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
     </Reference>
->>>>>>> d7bd44fd2f37d914ff604bb3982012026b0688f6
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>

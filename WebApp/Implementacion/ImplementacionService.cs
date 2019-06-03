@@ -268,7 +268,6 @@ namespace Implementacion
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
 
 
-
         public Directora ObtenerDirectoraPorId(UsuarioLogueado usuarioLogueado, int id)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
