@@ -193,10 +193,6 @@ namespace Implementacion
             throw new NotImplementedException();
         }
 
-        public Directora ObtenerDirectoraPorId(UsuarioLogueado usuarioLogueado, int id)
-        {
-            return _directoras.First(x => x.Id == id);
-        }
 
         public Grilla<Directora> ObtenerDirectoras(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
@@ -208,10 +204,6 @@ namespace Implementacion
             };
         }
 
-        public Docente ObtenerDocentePorId(UsuarioLogueado usuarioLogueado, int id)
-        {
-            return _docentes.First(x => x.Id == id);
-        }
 
         public Grilla<Docente> ObtenerDocentes(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
@@ -224,18 +216,7 @@ namespace Implementacion
             };
         }
 
-        public Institucion[] ObtenerInstituciones()
-        { return Logica.Principal.Instancia.ObtenerInstituciones(); }
 
-        public string ObtenerNombreGrupo()
-        {
-            return $"Repo original";
-        }
-
-        public Padre ObtenerPadrePorId(UsuarioLogueado usuarioLogueado, int id)
-        {
-            return Logica.Principal.Instancia.ObtenerPadrePorId(usuarioLogueado, id);
-        }
 
         public Grilla<Padre> ObtenerPadres(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
@@ -278,6 +259,46 @@ namespace Implementacion
         public Resultado ResponderNota(Nota nota, Comentario nuevoComentario, UsuarioLogueado usuarioLogueado)
         {
             throw new NotImplementedException();
+        }
+
+
+        // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
+        // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
+        // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
+        // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
+
+
+
+        public Directora ObtenerDirectoraPorId(UsuarioLogueado usuarioLogueado, int id)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.ObtenerDirectoraPorId(id); }
+        }
+
+        public Docente ObtenerDocentePorId(UsuarioLogueado usuarioLogueado, int id)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.ObtenerDocentePorId(id); }
+        }
+
+        public Institucion[] ObtenerInstituciones()
+        { return Logica.Principal.Instancia.ObtenerInstituciones(); }
+
+        public string ObtenerNombreGrupo()
+        {
+            return $"Lastra - Belmonte - Balaudo";
+        }
+
+        public Padre ObtenerPadrePorId(UsuarioLogueado usuarioLogueado, int id)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.ObtenerPadrePorId(id); }
         }
     }
 }

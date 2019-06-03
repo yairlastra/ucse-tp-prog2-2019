@@ -20,9 +20,13 @@ namespace Logica
         public Institucion[] ObtenerInstituciones()
         { return Archivos.Instancia.ObtenerInstituciones(); }
 
-        public Padre ObtenerPadrePorId(UsuarioLogueado usuarioLogueado, int id)
+        public Padre ObtenerPadrePorId(int id)
         { return Archivos.Instancia.ObtenerPadres().First(x => x.Id == id); }
 
+        public Docente ObtenerDocentePorId(int id)
+        { return Archivos.Instancia.ObtenerDocentes().First(x => x.Id == id); }
 
+        public Directora ObtenerDirectoraPorId(int id)
+        { return Archivos.Instancia.ObtenerDirectoras().First(x => x.Id == id); }
     }
 }

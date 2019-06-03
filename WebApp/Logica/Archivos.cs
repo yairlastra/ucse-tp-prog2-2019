@@ -17,7 +17,7 @@ namespace Logica
         public static string RutaArchivoHijos = @" C:\Users\lu_ga\Documents\prog1-tp-net-2018\trabajoPracticoNet\archivos\Hijos.txt";
         public static string RutaArchivoPadres = @" C:\Users\lu_ga\Documents\prog1-tp-net-2018\trabajoPracticoNet\archivos\Padres.txt";
         public static string RutaArchivoDocentes = @" C:\Users\lu_ga\Documents\prog1-tp-net-2018\trabajoPracticoNet\archivos\Docentes.txt";
-
+        public static string RutaArchivoDirectoras = @" C:\Users\lu_ga\Documents\prog1-tp-net-2018\trabajoPracticoNet\archivos\Directoras.txt";
 
         public Institucion[] ObtenerInstituciones()
         {
@@ -83,11 +83,28 @@ namespace Logica
             return Docentes;
         }
 
+        public Directora[] ObtenerDirectoras()
+        {
+            Directora[] Directoras = new Directora[] { };
+            if (!File.Exists(RutaArchivoDirectoras))
+            { File.Create(RutaArchivoDirectoras); }
+            else
+            {
+                using (StreamReader Leer = new StreamReader(RutaArchivoDirectoras, false))
+                {
+                    string ContenidoDelArchivo = Leer.ReadToEnd();
+                    Directoras = JsonConvert.DeserializeObject<Directora[]>(ContenidoDelArchivo) == null ? new Directora[] { } : JsonConvert.DeserializeObject<Directora[]>(ContenidoDelArchivo);
+                }
+            }
+            return Directoras;
+        }
+
         public bool ModificarArchivoInstituciones()
         {
+            Institucion[] Instituciones = ObtenerInstituciones();
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoInstituciones, false))
             {
-                string jsonInstituciones = JsonConvert.SerializeObject(ObtenerInstituciones());
+                string jsonInstituciones = JsonConvert.SerializeObject(Instituciones);
                 Escribir.Write(jsonInstituciones);
                 return true;
             }
@@ -95,9 +112,10 @@ namespace Logica
 
         public bool ModificarArchivoHijos()
         {
+            Hijo[] Hijos = ObtenerHijos();
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoHijos, false))
             {
-                string jsonHijos = JsonConvert.SerializeObject(ObtenerHijos());
+                string jsonHijos = JsonConvert.SerializeObject(Hijos);
                 Escribir.Write(jsonHijos);
                 return true;
             }
@@ -105,9 +123,10 @@ namespace Logica
 
         public bool ModificarArchivoPadres()
         {
+            Padre[] Padres = ObtenerPadres();
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoPadres, false))
             {
-                string jsonPadres = JsonConvert.SerializeObject(ObtenerPadres());
+                string jsonPadres = JsonConvert.SerializeObject(Padres);
                 Escribir.Write(jsonPadres);
                 return true;
             }
@@ -115,14 +134,25 @@ namespace Logica
 
         public bool ModificarArchivoDocentes()
         {
+            Docente[] Docentes = ObtenerDocentes();
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoDocentes, false))
             {
-                string jsonDocentes = JsonConvert.SerializeObject(ObtenerDocentes());
+                string jsonDocentes = JsonConvert.SerializeObject(Docentes);
                 Escribir.Write(jsonDocentes);
                 return true;
             }
         }
 
+        public bool ModificarArchivoDirectoras()
+        {
+            Directora[] Directoras = ObtenerDirectoras();
+            using (StreamWriter Escribir = new StreamWriter(RutaArchivoDirectoras, false))
+            {
+                string jsonDirectoras = JsonConvert.SerializeObject(Directoras);
+                Escribir.Write(jsonDirectoras);
+                return true;
+            }
+        }
 
 
     }
