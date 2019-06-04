@@ -99,9 +99,8 @@ namespace Logica
             return Directoras;
         }
 
-        public bool ModificarArchivoInstituciones()
+        public bool ModificarArchivoInstituciones(Institucion[] Instituciones)
         {
-            Institucion[] Instituciones = ObtenerInstituciones();
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoInstituciones, false))
             {
                 string jsonInstituciones = JsonConvert.SerializeObject(Instituciones);
@@ -110,9 +109,8 @@ namespace Logica
             }
         }
 
-        public bool ModificarArchivoHijos()
+        public bool ModificarArchivoHijos(Hijo[] Hijos)
         {
-            Hijo[] Hijos = ObtenerHijos();
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoHijos, false))
             {
                 string jsonHijos = JsonConvert.SerializeObject(Hijos);
@@ -121,9 +119,8 @@ namespace Logica
             }
         }
 
-        public bool ModificarArchivoPadres()
+        public bool ModificarArchivoPadres(Padre[] Padres)
         {
-            Padre[] Padres = ObtenerPadres();
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoPadres, false))
             {
                 string jsonPadres = JsonConvert.SerializeObject(Padres);
@@ -132,9 +129,8 @@ namespace Logica
             }
         }
 
-        public bool ModificarArchivoDocentes()
+        public bool ModificarArchivoDocentes(Docente[] Docentes)
         {
-            Docente[] Docentes = ObtenerDocentes();
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoDocentes, false))
             {
                 string jsonDocentes = JsonConvert.SerializeObject(Docentes);
@@ -143,9 +139,8 @@ namespace Logica
             }
         }
 
-        public bool ModificarArchivoDirectoras()
+        public bool ModificarArchivoDirectoras(Directora[] Directoras)
         {
-            Directora[] Directoras = ObtenerDirectoras();
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoDirectoras, false))
             {
                 string jsonDirectoras = JsonConvert.SerializeObject(Directoras);

@@ -107,75 +107,11 @@ namespace Implementacion
             throw new NotImplementedException();
         }
 
-        public Resultado EditarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)
-        {
-            _directoras.RemoveAll(x => x.Id == id);
-            _directoras.Add(directora);
-
-            return new Resultado();
-        }
-
-        public Resultado EditarAlumno(int id, Hijo hijo, UsuarioLogueado usuarioLogueado)
-        {
-            _alumnos.RemoveAll(x => x.Id == id);
-            _alumnos.Add(hijo);
-
-            return new Resultado();
-        }
-
-        public Resultado EditarDocente(int id, Docente docente, UsuarioLogueado usuarioLogueado)
-        {
-            _docentes.RemoveAll(x => x.Id == id);
-            _docentes.Add(docente);
-
-            return new Resultado();
-        }
-
-        public Resultado EditarPadreMadre(int id, Padre padre, UsuarioLogueado usuarioLogueado)
-        {
-            _padres.RemoveAll(x => x.Id == id);
-            _padres.Add(padre);
-
-            return new Resultado();
-        }
-
-        public Resultado EliminarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)
-        {
-            _directoras.RemoveAll(x => x.Id == id);
-
-            return new Resultado();
-        }
-
-        public Resultado EliminarDocente(int id, Docente docente, UsuarioLogueado usuarioLogueado)
-        {
-            _docentes.RemoveAll(x => x.Id == id);
-
-            return new Resultado();
-        }
-
-        public Resultado EliminarPadreMadre(int id, Padre padre, UsuarioLogueado usuarioLogueado)
-        {
-            _padres.RemoveAll(x => x.Id == id);
-
-            return new Resultado();
-        }
-
-        public Resultado EliminarAlumno(int id, Hijo hijo, UsuarioLogueado usuarioLogueado)
-        {
-            _alumnos.RemoveAll(x => x.Id == id);
-
-            return new Resultado();
-        }
-
         public Resultado MarcarNotaComoLeida(Nota nota, UsuarioLogueado usuarioLogueado)
         {
             throw new NotImplementedException();
         }
 
-        public Hijo ObtenerAlumnoPorId(UsuarioLogueado usuarioLogueado, int id)
-        {
-            return _alumnos.First(x => x.Id == id);
-        }
 
         public Grilla<Hijo> ObtenerAlumnos(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
@@ -262,11 +198,82 @@ namespace Implementacion
         }
 
 
+        public Resultado EditarAlumno(int id, Hijo hijo, UsuarioLogueado usuarioLogueado)
+        {
+            _alumnos.RemoveAll(x => x.Id == id);
+            _alumnos.Add(hijo);
+
+            return new Resultado();
+        }
+
+        public Resultado EditarDocente(int id, Docente docente, UsuarioLogueado usuarioLogueado)
+        {
+            _docentes.RemoveAll(x => x.Id == id);
+            _docentes.Add(docente);
+
+            return new Resultado();
+        }
+
+        public Resultado EditarPadreMadre(int id, Padre padre, UsuarioLogueado usuarioLogueado)
+        {
+            _padres.RemoveAll(x => x.Id == id);
+            _padres.Add(padre);
+
+            return new Resultado();
+        }
+
+        public Resultado EliminarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)
+        {
+            _directoras.RemoveAll(x => x.Id == id);
+
+            return new Resultado();
+        }
+
+        public Resultado EliminarDocente(int id, Docente docente, UsuarioLogueado usuarioLogueado)
+        {
+            _docentes.RemoveAll(x => x.Id == id);
+
+            return new Resultado();
+        }
+
+        public Resultado EliminarAlumno(int id, Hijo hijo, UsuarioLogueado usuarioLogueado)
+        {
+            _alumnos.RemoveAll(x => x.Id == id);
+
+            return new Resultado();
+        }
+
+        public Resultado EliminarPadreMadre(int id, Padre padre, UsuarioLogueado usuarioLogueado)
+        {
+            _padres.RemoveAll(x => x.Id == id);
+
+            return new Resultado();
+        }
+
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
 
+
+        public Resultado EditarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.EditarDirectora(id, directora); }
+        }
+
+        //hay que revisar este ultimo de EditarDirectora
+
+
+        public Hijo ObtenerAlumnoPorId(UsuarioLogueado usuarioLogueado, int id)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.ObtenerAlumnoPorId(id); }
+        }
 
         public Directora ObtenerDirectoraPorId(UsuarioLogueado usuarioLogueado, int id)
         {

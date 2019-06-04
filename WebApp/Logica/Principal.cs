@@ -28,5 +28,23 @@ namespace Logica
 
         public Directora ObtenerDirectoraPorId(int id)
         { return Archivos.Instancia.ObtenerDirectoras().First(x => x.Id == id); }
+
+        public Hijo ObtenerAlumnoPorId(int id)
+        { return Archivos.Instancia.ObtenerHijos().First(x => x.Id == id); }
+
+        // este metodo de abejo no me deja conforme
+
+        public Resultado EditarDirectora(int id, Directora directora)
+        {
+            Directora[] Directoras = Archivos.Instancia.ObtenerDirectoras().Where(x => x.Id != id).ToArray();
+            Directoras[Directoras.Length] = directora;
+            Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
+            return new Resultado();
+        }
+
+
+
+
+
     }
 }
