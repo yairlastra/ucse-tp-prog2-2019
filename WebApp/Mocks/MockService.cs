@@ -49,6 +49,13 @@ namespace Mocks
             new Hijo(){ Id = 4, Nombre = "AL 4", Apellido="AP 4", Email="APE 4", FechaNacimiento = new DateTime(1989,11,29), ResultadoUltimaEvaluacionAnual = 3},
         };
 
+        public static List<Sala> _salas = new List<Sala>()
+        {
+            new Sala(){ Id = 1, Nombre = "Sala 1" },
+            new Sala(){ Id = 2, Nombre = "Sala 2" },
+            new Sala(){ Id = 3, Nombre = "Sala 3" },
+        };
+
         public Resultado AltaDirectora(Directora directora, UsuarioLogueado usuarioLogueado)
         {
             directora.Id = _directoras.Count + 1;
@@ -88,7 +95,14 @@ namespace Mocks
 
         public Resultado AsignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
         {
-            throw new NotImplementedException();
+            var salasDocente = docente.Salas != null ? docente.Salas.ToList() : new List<Sala>();
+
+            if (salasDocente.Any(x => x.Id == sala.Id) == false)
+                salasDocente.Add(sala);
+
+            docente.Salas = salasDocente.ToArray();
+
+            return new Resultado();
         }
 
         public Resultado AsignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
@@ -98,7 +112,14 @@ namespace Mocks
 
         public Resultado DesasignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
         {
-            throw new NotImplementedException();
+            var salasDocente = docente.Salas != null ? docente.Salas.ToList() : new List<Sala>();
+
+            if (salasDocente.Any(x => x.Id == sala.Id) == true)
+                salasDocente.Remove(sala);
+
+            docente.Salas = salasDocente.ToArray();
+
+            return new Resultado();
         }
 
         public Resultado DesasignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
@@ -181,7 +202,7 @@ namespace Mocks
             return new Grilla<Hijo>()
             {
                 Lista = _alumnos
-                .Where(x=> string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal))
+                .Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal))
                 .Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
                 CantidadRegistros = _alumnos.Count
             };
@@ -194,7 +215,7 @@ namespace Mocks
 
         public Directora ObtenerDirectoraPorId(UsuarioLogueado usuarioLogueado, int id)
         {
-            return _directoras.First(x => x.Id == id);            
+            return _directoras.First(x => x.Id == id);
         }
 
         public Grilla<Directora> ObtenerDirectoras(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
@@ -256,7 +277,7 @@ namespace Mocks
 
         public Sala[] ObtenerSalasPorInstitucion(UsuarioLogueado usuarioLogueado)
         {
-            throw new NotImplementedException();
+            return _salas.ToArray();
         }
 
         public UsuarioLogueado ObtenerUsuario(string email, string clave)
