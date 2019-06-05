@@ -6,21 +6,20 @@ using System.Web;
 using System.Collections.Generic;
 using System;
 using System.Net.Mail;
-using WebApp;
+using WebApp.Controllers;
 using Contratos;
 using Mocks;
 
 namespace AnBem.WebApplication.Controllers
-{
-    //[Authorize]
+{    
     public class PadresController : BaseController
     {
         private static IServicioWeb servicio = new MockService();
-        // GET: /Padres/
+        
         [HttpGet]
         public async Task<ActionResult> Index()
         {
-            return View(servicio.ObtenerPadres(null, 0,0,"").Lista);
+            return View();
         }
 
         // GET: /Padres/Create

@@ -4,7 +4,7 @@ using MVCGrid.Models;
 using MVCGrid.Web;
 using Newtonsoft.Json;
 using System.Linq;
-using WebApp;
+using WebApp.Controllers;
 
 namespace WebApp.Grid
 {
@@ -34,8 +34,9 @@ namespace WebApp.Grid
 						  cols.Add().WithColumnName("Email").WithHeaderText("Email").WithValueExpression(i => i.Email).WithSorting(false);					  
 					  cols.Add().WithColumnName("Details").WithHeaderText("").WithCellCssClassExpression((i, c) => "action").WithHtmlEncoding(false)
 								.WithValueExpression((i, c) =>
-									  string.Format("{0}{1}", 									  
-										string.Format("<a data-modal='' class='text-info' href='{0}' id='{1}' title='Editar'><span class='fa fa-pencil'></span></a>", c.UrlHelper.Action("Form", "Padres", new { id = i.Id }), i.Id),
+									  string.Format("{0}{1}{2}",
+                                        string.Format("<a data-modal='' class='text-info' href='{0}' id='{1}' title='Asignar hijos'><span class='fa fa-server'></span></a>", c.UrlHelper.Action("Assign", "Padres", new { id = i.Id }), i.Id),
+                                        string.Format("<a data-modal='' class='text-info' href='{0}' id='{1}' title='Editar'><span class='fa fa-pencil'></span></a>", c.UrlHelper.Action("Form", "Padres", new { id = i.Id }), i.Id),
 										string.Format("<a data-modal='' class='text-info' href='{0}' id='{1}' title='Eliminar'><span class='fa fa-trash'></span></a>", c.UrlHelper.Action("Form", "Padres", new { id = i.Id, readOnly = true, delete = true }), i.Id)
 									  ));
 				  })
@@ -51,7 +52,7 @@ namespace WebApp.Grid
                       string globalSearch = options.GetAdditionalQueryOptionString("search");
                       UsuarioLogueado usuarioLogueado = JsonConvert.DeserializeObject<UsuarioLogueado>(options.GetPageParameterString("user"));
 
-                      IServicioWeb servicio = BaseController.CreateService();
+                      IServicioWeb servicio = BaseController.CreateService(); //cambiar por new ImplementacionService();
                       var data = servicio.ObtenerPadres(usuarioLogueado, options.PageIndex.Value, options.ItemsPerPage.Value, globalSearch);
 
 					  return new QueryResult<Padre>()
