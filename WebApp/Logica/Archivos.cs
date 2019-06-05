@@ -21,9 +21,9 @@ namespace Logica
         public static string RutaArchivoDocentes = UbicacionArchivo + "Docentes.txt";
         public static string RutaArchivoDirectoras = UbicacionArchivo + "Directoras.txt";
 
-        public Institucion[] ObtenerInstituciones()
+        public List<Institucion> ObtenerInstituciones()
         {
-            Institucion[] Instituciones = new Institucion[] { };
+            List <Institucion> Instituciones = new List<Institucion> { };
             if (!File.Exists(RutaArchivoInstituciones))
             { File.Create(RutaArchivoInstituciones); }
             else
@@ -31,15 +31,15 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoInstituciones, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Instituciones = JsonConvert.DeserializeObject<Institucion[]>(ContenidoDelArchivo) == null ? new Institucion[] { } : JsonConvert.DeserializeObject<Institucion[]>(ContenidoDelArchivo);
+                    Instituciones = JsonConvert.DeserializeObject<List<Institucion>>(ContenidoDelArchivo) == null ? new List<Institucion> { } : JsonConvert.DeserializeObject<List<Institucion>>(ContenidoDelArchivo);
                 }
             }
             return Instituciones;
         }
 
-        public Hijo[] ObtenerHijos()
+        public List<Hijo> ObtenerHijos()
         {
-            Hijo[] Hijos = new Hijo[] { };
+            List<Hijo> Hijos = new List<Hijo> { };
             if (!File.Exists(RutaArchivoHijos))
             { File.Create(RutaArchivoHijos); }
             else
@@ -47,15 +47,15 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoHijos, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Hijos = JsonConvert.DeserializeObject<Hijo[]>(ContenidoDelArchivo) == null ? new Hijo[] { } : JsonConvert.DeserializeObject<Hijo[]>(ContenidoDelArchivo);
+                    Hijos = JsonConvert.DeserializeObject<List<Hijo>>(ContenidoDelArchivo) == null ? new List<Hijo> { } : JsonConvert.DeserializeObject<List<Hijo>>(ContenidoDelArchivo);
                 }
             }
             return Hijos;
         }
 
-        public Padre[] ObtenerPadres()
+        public List<Padre> ObtenerPadres()
         {
-            Padre[] Padres = new Padre[] { };
+            List<Padre> Padres = new List<Padre> { };
             if (!File.Exists(RutaArchivoPadres))
             { File.Create(RutaArchivoPadres); }
             else
@@ -63,15 +63,15 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoPadres, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Padres = JsonConvert.DeserializeObject<Padre[]>(ContenidoDelArchivo) == null ? new Padre[] { } : JsonConvert.DeserializeObject<Padre[]>(ContenidoDelArchivo);
+                    Padres = JsonConvert.DeserializeObject<List<Padre>>(ContenidoDelArchivo) == null ? new List<Padre> { } : JsonConvert.DeserializeObject<List<Padre>>(ContenidoDelArchivo);
                 }
             }
             return Padres;
         }
 
-        public Docente[] ObtenerDocentes()
+        public List<Docente> ObtenerDocentes()
         {
-            Docente[] Docentes = new Docente[] { };
+            List<Docente> Docentes = new List<Docente> { };
             if (!File.Exists(RutaArchivoDocentes))
             { File.Create(RutaArchivoDocentes); }
             else
@@ -79,15 +79,15 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoDocentes, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Docentes = JsonConvert.DeserializeObject<Docente[]>(ContenidoDelArchivo) == null ? new Docente[] { } : JsonConvert.DeserializeObject<Docente[]>(ContenidoDelArchivo);
+                    Docentes = JsonConvert.DeserializeObject<List<Docente>>(ContenidoDelArchivo) == null ? new List<Docente> { } : JsonConvert.DeserializeObject<List<Docente>>(ContenidoDelArchivo);
                 }
             }
             return Docentes;
         }
 
-        public Directora[] ObtenerDirectoras()
+        public List<Directora> ObtenerDirectoras()
         {
-            Directora[] Directoras = new Directora[] { };
+            List<Directora> Directoras = new List<Directora> { };
             if (!File.Exists(RutaArchivoDirectoras))
             { File.Create(RutaArchivoDirectoras); }
             else
@@ -95,13 +95,13 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoDirectoras, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Directoras = JsonConvert.DeserializeObject<Directora[]>(ContenidoDelArchivo) == null ? new Directora[] { } : JsonConvert.DeserializeObject<Directora[]>(ContenidoDelArchivo);
+                    Directoras = JsonConvert.DeserializeObject<List<Directora>>(ContenidoDelArchivo) == null ? new List<Directora> { } : JsonConvert.DeserializeObject<List<Directora>>(ContenidoDelArchivo);
                 }
             }
             return Directoras;
         }
 
-        public bool ModificarArchivoInstituciones(Institucion[] Instituciones)
+        public bool ModificarArchivoInstituciones(List<Institucion> Instituciones)
         {
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoInstituciones, false))
             {
@@ -111,7 +111,7 @@ namespace Logica
             }
         }
 
-        public bool ModificarArchivoHijos(Hijo[] Hijos)
+        public bool ModificarArchivoHijos(List<Hijo> Hijos)
         {
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoHijos, false))
             {
@@ -121,7 +121,7 @@ namespace Logica
             }
         }
 
-        public bool ModificarArchivoPadres(Padre[] Padres)
+        public bool ModificarArchivoPadres(List<Padre> Padres)
         {
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoPadres, false))
             {
@@ -131,7 +131,7 @@ namespace Logica
             }
         }
 
-        public bool ModificarArchivoDocentes(Docente[] Docentes)
+        public bool ModificarArchivoDocentes(List<Docente> Docentes)
         {
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoDocentes, false))
             {
@@ -141,7 +141,7 @@ namespace Logica
             }
         }
 
-        public bool ModificarArchivoDirectoras(Directora[] Directoras)
+        public bool ModificarArchivoDirectoras(List<Directora> Directoras)
         {
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoDirectoras, false))
             {

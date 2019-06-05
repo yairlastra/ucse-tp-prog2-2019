@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Contratos;
 
 namespace Logica
 {
-    public class UsuarioLogin
+    public class UsuarioLogin : Usuario
     {
-        public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string Apellido { get; set; }
-        public string Email { get; set; }
         public int Clave { get; set; }
     }
 }

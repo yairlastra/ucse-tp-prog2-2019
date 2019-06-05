@@ -18,7 +18,7 @@ namespace Logica
         private Principal() { }
 
         public Institucion[] ObtenerInstituciones()
-        { return Archivos.Instancia.ObtenerInstituciones(); }
+        { return Archivos.Instancia.ObtenerInstituciones().ToArray(); }
 
         public Padre ObtenerPadrePorId(int id)
         { return Archivos.Instancia.ObtenerPadres().First(x => x.Id == id); }
@@ -34,36 +34,36 @@ namespace Logica
 
         public Resultado AltaDirectora(Directora directora, UsuarioLogueado usuarioLogueado)
         {
-            Directora[] Directoras = Archivos.Instancia.ObtenerDirectoras().ToArray();
-            directora.Id = (Directoras.Length) + 1;
-            Directoras[Directoras.Length] = directora;
-            Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
+            List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras();
+            directora.Id = (Directoras.Count) + 1;
+            Directoras.Add(directora);
+            Archivos.Instancia.ModificarArchivoDirectoras(Directoras.ToList());
             return new Resultado();
         }
 
         public Resultado AltaDocente(Docente docente, UsuarioLogueado usuarioLogueado)
         {
-            Docente[] Docentes = Archivos.Instancia.ObtenerDocentes().ToArray();
-            docente.Id = (Docentes.Length) + 1;
-            Docentes[Docentes.Length] = docente;
+            List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes();
+            docente.Id = (Docentes.Count) + 1;
+            Docentes.Add(docente);
             Archivos.Instancia.ModificarArchivoDocentes(Docentes);
             return new Resultado();
         }
 
         public Resultado AltaPadre(Padre padre, UsuarioLogueado usuarioLogueado)
         {
-            Padre[] Padres = Archivos.Instancia.ObtenerPadres().ToArray();
-            padre.Id = (Padres.Length) + 1;
-            Padres[Padres.Length] = padre;
+            List<Padre> Padres = Archivos.Instancia.ObtenerPadres();
+            padre.Id = (Padres.Count) + 1;
+            Padres.Add(padre);
             Archivos.Instancia.ModificarArchivoPadres(Padres);
             return new Resultado();
         }
 
         public Resultado AltaHijo(Hijo hijo, UsuarioLogueado usuarioLogueado)
         {
-            Hijo[] Hijos = Archivos.Instancia.ObtenerHijos().ToArray();
-            hijo.Id = (Hijos.Length) + 1;
-            Hijos[Hijos.Length] = hijo;
+            List<Hijo> Hijos = Archivos.Instancia.ObtenerHijos();
+            hijo.Id = (Hijos.Count) + 1;
+            Hijos.Add(hijo);
             Archivos.Instancia.ModificarArchivoHijos(Hijos);
             return new Resultado();
         }
@@ -74,8 +74,9 @@ namespace Logica
 
         public Resultado EditarDirectora(int id, Directora directora)
         {
-            Directora[] Directoras = Archivos.Instancia.ObtenerDirectoras().Where(x => x.Id != id).ToArray();
-            Directoras[Directoras.Length] = directora;
+            List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras();
+            Directoras.RemoveAll(x => x.Id == id);
+            Directoras.Add(directora);
             Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
             return new Resultado();
         }
