@@ -13,11 +13,13 @@ namespace Logica
     {
         public static Archivos Instancia { get { return new Archivos(); } }
 
-        public static string RutaArchivoInstituciones = @" C:\Users\lu_ga\Documents\prog1-tp-net-2018\trabajoPracticoNet\archivos\Instituciones.txt";
-        public static string RutaArchivoHijos = @" C:\Users\lu_ga\Documents\prog1-tp-net-2018\trabajoPracticoNet\archivos\Hijos.txt";
-        public static string RutaArchivoPadres = @" C:\Users\lu_ga\Documents\prog1-tp-net-2018\trabajoPracticoNet\archivos\Padres.txt";
-        public static string RutaArchivoDocentes = @" C:\Users\lu_ga\Documents\prog1-tp-net-2018\trabajoPracticoNet\archivos\Docentes.txt";
-        public static string RutaArchivoDirectoras = @" C:\Users\lu_ga\Documents\prog1-tp-net-2018\trabajoPracticoNet\archivos\Directoras.txt";
+        private static string UbicacionArchivo = @" C:\Users\lu_ga\Documents\ucse-tp-prog2-2019\WebApp\Archivos\";
+
+        public static string RutaArchivoInstituciones = UbicacionArchivo + "Instituciones.txt";
+        public static string RutaArchivoHijos = UbicacionArchivo + "Hijos.txt";
+        public static string RutaArchivoPadres = UbicacionArchivo + "Padres.txt";
+        public static string RutaArchivoDocentes = UbicacionArchivo + "Docentes.txt";
+        public static string RutaArchivoDirectoras = UbicacionArchivo + "Directoras.txt";
 
         public Institucion[] ObtenerInstituciones()
         {

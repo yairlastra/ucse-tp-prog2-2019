@@ -50,41 +50,9 @@ namespace Implementacion
             new Hijo(){ Id = 4, Nombre = "AL 4", Apellido="AP 4", Email="APE 4", FechaNacimiento = new DateTime(1989,11,29), ResultadoUltimaEvaluacionAnual = 3},
         };
 
-        public Resultado AltaDirectora(Directora directora, UsuarioLogueado usuarioLogueado)
-        {
-            directora.Id = _directoras.Count + 1;
-            _directoras.Add(directora);
-
-            return new Resultado();
-        }
-
-        public Resultado AltaDocente(Docente docente, UsuarioLogueado usuarioLogueado)
-        {
-            docente.Id = _docentes.Count + 1;
-            _docentes.Add(docente);
-
-            return new Resultado();
-        }
-
-        public Resultado AltaAlumno(Hijo hijo, UsuarioLogueado usuarioLogueado)
-        {
-            hijo.Id = _alumnos.Count + 1;
-            _alumnos.Add(hijo);
-
-            return new Resultado();
-        }
-
         public Resultado AltaNota(Nota nota, Sala[] salas, Hijo[] hijos, UsuarioLogueado usuarioLogueado)
         {
             throw new NotImplementedException();
-        }
-
-        public Resultado AltaPadreMadre(Padre padre, UsuarioLogueado usuarioLogueado)
-        {
-            padre.Id = _padres.Count + 1;
-            _padres.Add(padre);
-
-            return new Resultado();
         }
 
         public Resultado AsignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
@@ -256,6 +224,7 @@ namespace Implementacion
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
 
 
+
         public Resultado EditarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
@@ -266,6 +235,37 @@ namespace Implementacion
 
         //hay que revisar este ultimo de EditarDirectora
 
+        public Resultado AltaPadreMadre(Padre padre, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.AltaPadre(padre, usuarioLogueado); }
+        }
+
+        public Resultado AltaDocente(Docente docente, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.AltaDocente(docente, usuarioLogueado); }
+        }
+
+        public Resultado AltaAlumno(Hijo hijo, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.AltaHijo(hijo, usuarioLogueado); }
+        }
+
+        public Resultado AltaDirectora(Directora directora, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.AltaDirectora(directora, usuarioLogueado); }
+        }
 
         public Hijo ObtenerAlumnoPorId(UsuarioLogueado usuarioLogueado, int id)
         {
@@ -291,14 +291,6 @@ namespace Implementacion
             { return Logica.Principal.Instancia.ObtenerDocentePorId(id); }
         }
 
-        public Institucion[] ObtenerInstituciones()
-        { return Logica.Principal.Instancia.ObtenerInstituciones(); }
-
-        public string ObtenerNombreGrupo()
-        {
-            return $"Lastra - Belmonte - Balaudo";
-        }
-
         public Padre ObtenerPadrePorId(UsuarioLogueado usuarioLogueado, int id)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
@@ -306,5 +298,11 @@ namespace Implementacion
             else
             { return Logica.Principal.Instancia.ObtenerPadrePorId(id); }
         }
+
+        public Institucion[] ObtenerInstituciones()
+        { return Logica.Principal.Instancia.ObtenerInstituciones(); }
+
+        public string ObtenerNombreGrupo()
+        { return $"Lastra - Belmonte - Balaudo"; }
     }
 }
