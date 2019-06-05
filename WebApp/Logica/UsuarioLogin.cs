@@ -10,5 +10,6 @@ namespace Logica
     public class UsuarioLogin : Usuario
     {
         public int Clave { get; set; }
+        public Roles[] Roles { get; set; }
     }
 }

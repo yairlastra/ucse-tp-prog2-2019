@@ -20,6 +20,7 @@ namespace Logica
         public static string RutaArchivoPadres = UbicacionArchivo + "Padres.txt";
         public static string RutaArchivoDocentes = UbicacionArchivo + "Docentes.txt";
         public static string RutaArchivoDirectoras = UbicacionArchivo + "Directoras.txt";
+         public static string RutaArchivoUsuarios = UbicacionArchivo + "Usuarios.txt";
 
         public List<Institucion> ObtenerInstituciones()
         {
@@ -101,6 +102,22 @@ namespace Logica
             return Directoras;
         }
 
+        public List<UsuarioLogin> ObtenerUsuarios()
+        {
+            List<UsuarioLogin> Usuarios = new List<UsuarioLogin> { };
+            if (!File.Exists(RutaArchivoUsuarios))
+            { File.Create(RutaArchivoUsuarios); }
+            else
+            {
+                using (StreamReader Leer = new StreamReader(RutaArchivoUsuarios, false))
+                {
+                    string ContenidoDelArchivo = Leer.ReadToEnd();
+                    Usuarios = JsonConvert.DeserializeObject<List<UsuarioLogin>>(ContenidoDelArchivo) == null ? new List<UsuarioLogin> { } : JsonConvert.DeserializeObject<List<UsuarioLogin>>(ContenidoDelArchivo);
+                }
+            }
+            return Usuarios;
+        }
+
         public bool ModificarArchivoInstituciones(List<Institucion> Instituciones)
         {
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoInstituciones, false))
@@ -147,6 +164,16 @@ namespace Logica
             {
                 string jsonDirectoras = JsonConvert.SerializeObject(Directoras);
                 Escribir.Write(jsonDirectoras);
+                return true;
+            }
+        }
+
+        public bool ModificarArchivoUsuarios(List<UsuarioLogin> Usuarios)
+        {
+            using (StreamWriter Escribir = new StreamWriter(RutaArchivoDirectoras, false))
+            {
+                string jsonUsuarios = JsonConvert.SerializeObject(Usuarios);
+                Escribir.Write(jsonUsuarios);
                 return true;
             }
         }
