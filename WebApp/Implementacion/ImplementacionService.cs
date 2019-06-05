@@ -10,15 +10,7 @@ namespace Implementacion
 {
     public class ImplementacionService : IServicioWeb
     {
-        public static List<Directora> _directoras = new List<Directora>()
-        {
-            new Directora(){ Id = 1, Nombre = "A 1", Apellido ="B", Email = "C", Cargo = "D"},new Directora(){ Id = 2, Nombre = "A 2", Apellido ="B", Email = "C", Cargo = "D"},
-            new Directora(){ Id = 3, Nombre = "A 3", Apellido ="B", Email = "C", Cargo = "D"},new Directora(){ Id = 4, Nombre = "A 4", Apellido ="B", Email = "C", Cargo = "D"},
-            new Directora(){ Id = 5, Nombre = "A 5", Apellido ="B", Email = "C", Cargo = "D"},new Directora(){ Id = 6, Nombre = "A 6", Apellido ="B", Email = "C", Cargo = "D"},
-            new Directora(){ Id = 7, Nombre = "A 7", Apellido ="B", Email = "C", Cargo = "D"},new Directora(){ Id = 8, Nombre = "A 8", Apellido ="B", Email = "C", Cargo = "D"},
-            new Directora(){ Id = 9, Nombre = "A 9", Apellido ="B", Email = "C", Cargo = "D"},new Directora(){ Id = 10, Nombre = "A 10", Apellido ="B", Email = "C", Cargo = "D"},
-            new Directora(){ Id = 11, Nombre = "A 11", Apellido ="B", Email = "C", Cargo = "D"},new Directora(){ Id = 12, Nombre = "A 12", Apellido ="B", Email = "C", Cargo = "D"},
-        };
+        
 
         public static List<Docente> _docentes = new List<Docente>()
         {
@@ -98,15 +90,7 @@ namespace Implementacion
         }
 
 
-        public Grilla<Directora> ObtenerDirectoras(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
-        {
-            return new Grilla<Directora>()
-            {
-                Lista = _directoras.Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal))
-                                    .Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
-                CantidadRegistros = _directoras.Count
-            };
-        }
+       
 
 
         public Grilla<Docente> ObtenerDocentes(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
@@ -143,22 +127,7 @@ namespace Implementacion
             throw new NotImplementedException();
         }
 
-        public UsuarioLogueado ObtenerUsuario(string email, string clave)
-        {
-            if (email == "" || clave == "")
-                return null;
 
-            if (email == "directora@ucse.com" && clave == "123456")
-                return new UsuarioLogueado() { Email = email, Nombre = "Usuario", Apellido = "Directora", Roles = new Roles[] { Roles.Directora }, RolSeleccionado = Roles.Directora };
-
-            if (email == "docente@ucse.com" && clave == "123456")
-                return new UsuarioLogueado() { Email = email, Nombre = "Usuario", Apellido = "Docente", Roles = new Roles[] { Roles.Docente }, RolSeleccionado = Roles.Docente };
-
-            if (email == "padre@ucse.com" && clave == "123456")
-                return new UsuarioLogueado() { Email = email, Nombre = "Usuario", Apellido = "Padre", Roles = new Roles[] { Roles.Padre }, RolSeleccionado = Roles.Padre };
-
-            return null;
-        }
 
         public Resultado ResponderNota(Nota nota, Comentario nuevoComentario, UsuarioLogueado usuarioLogueado)
         {
@@ -190,12 +159,7 @@ namespace Implementacion
             return new Resultado();
         }
 
-        public Resultado EliminarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)
-        {
-            _directoras.RemoveAll(x => x.Id == id);
 
-            return new Resultado();
-        }
 
         public Resultado EliminarDocente(int id, Docente docente, UsuarioLogueado usuarioLogueado)
         {
@@ -218,12 +182,45 @@ namespace Implementacion
             return new Resultado();
         }
 
+
+        public UsuarioLogueado ObtenerUsuario(string email, string clave)
+        {
+            if (email == "" || clave == "")
+                return null;
+
+            if (email == "directora@ucse.com" && clave == "123456")
+                return new UsuarioLogueado() { Email = email, Nombre = "Usuario", Apellido = "Directora", Roles = new Roles[] { Roles.Directora }, RolSeleccionado = Roles.Directora };
+
+            if (email == "docente@ucse.com" && clave == "123456")
+                return new UsuarioLogueado() { Email = email, Nombre = "Usuario", Apellido = "Docente", Roles = new Roles[] { Roles.Docente }, RolSeleccionado = Roles.Docente };
+
+            if (email == "padre@ucse.com" && clave == "123456")
+                return new UsuarioLogueado() { Email = email, Nombre = "Usuario", Apellido = "Padre", Roles = new Roles[] { Roles.Padre }, RolSeleccionado = Roles.Padre };
+
+            return null;
+        }
+
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
 
 
+        public Grilla<Directora> ObtenerDirectoras(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.ObtenerDirectoras(paginaActual, totalPorPagina, busquedaGlobal); }   
+        }
+        
+        public Resultado EliminarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.EliminarDirectora(id); }
+        }
 
         public Resultado EditarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)
         {

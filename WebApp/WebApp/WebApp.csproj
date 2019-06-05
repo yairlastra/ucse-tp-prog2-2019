@@ -199,6 +199,10 @@
       <Project>{afee4439-32ef-4973-b607-8432a2473f2e}</Project>
       <Name>Contratos</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Implementacion\Implementacion.csproj">
+      <Project>{cf9ab91b-6b68-4770-ba6f-c91064a37b1d}</Project>
+      <Name>Implementacion</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mocks\Mocks.csproj">
       <Project>{c71db83d-c94e-46af-8579-b3dffe048a6c}</Project>
       <Name>Mocks</Name>

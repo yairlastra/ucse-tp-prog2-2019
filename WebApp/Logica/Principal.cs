@@ -34,7 +34,7 @@ namespace Logica
 
         public Resultado AltaDirectora(Directora directora, UsuarioLogueado usuarioLogueado)
         {
-            List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras();
+            List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras().ToList();
             directora.Id = (Directoras.Count) + 1;
             Directoras.Add(directora);
             Archivos.Instancia.ModificarArchivoDirectoras(Directoras.ToList());
@@ -81,7 +81,22 @@ namespace Logica
             return new Resultado();
         }
 
+        public Resultado EliminarDirectora(int id)
+        {
+            List <Directora> Directoras = Archivos.Instancia.ObtenerDirectoras();
+            Directoras.RemoveAll(x => x.Id == id);
+            Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
+            return new Resultado();
+        }
 
+        public Grilla<Directora> ObtenerDirectoras(int paginaActual, int totalPorPagina, string busquedaGlobal)
+        {
+            return new Grilla<Directora>()
+            {
+                Lista = Archivos.Instancia.ObtenerDirectoras().Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal)).Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
+                CantidadRegistros = Archivos.Instancia.ObtenerDirectoras().ToList().Count
+            };
+        }
 
 
 

@@ -13,7 +13,7 @@ namespace Logica
     {
         public static Archivos Instancia { get { return new Archivos(); } }
 
-        private static string UbicacionArchivo = @" C:\Users\lu_ga\Documents\ucse-tp-prog2-2019\WebApp\Archivos\";
+        private static readonly string UbicacionArchivo = @" C:\Users\lu_ga\Documents\ucse-tp-prog2-2019\WebApp\Archivos\";
 
         public static string RutaArchivoInstituciones = UbicacionArchivo + "Instituciones.txt";
         public static string RutaArchivoHijos = UbicacionArchivo + "Hijos.txt";
@@ -32,7 +32,7 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoInstituciones, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Instituciones = JsonConvert.DeserializeObject<List<Institucion>>(ContenidoDelArchivo) == null ? new List<Institucion> { } : JsonConvert.DeserializeObject<List<Institucion>>(ContenidoDelArchivo);
+                    Instituciones = JsonConvert.DeserializeObject<List<Institucion>>(ContenidoDelArchivo) ?? new List<Institucion> { };
                 }
             }
             return Instituciones;
@@ -48,7 +48,7 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoHijos, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Hijos = JsonConvert.DeserializeObject<List<Hijo>>(ContenidoDelArchivo) == null ? new List<Hijo> { } : JsonConvert.DeserializeObject<List<Hijo>>(ContenidoDelArchivo);
+                    Hijos = JsonConvert.DeserializeObject<List<Hijo>>(ContenidoDelArchivo) ?? new List<Hijo> { };
                 }
             }
             return Hijos;
@@ -64,7 +64,7 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoPadres, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Padres = JsonConvert.DeserializeObject<List<Padre>>(ContenidoDelArchivo) == null ? new List<Padre> { } : JsonConvert.DeserializeObject<List<Padre>>(ContenidoDelArchivo);
+                    Padres = JsonConvert.DeserializeObject<List<Padre>>(ContenidoDelArchivo) ?? new List<Padre> { };
                 }
             }
             return Padres;
@@ -80,7 +80,7 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoDocentes, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Docentes = JsonConvert.DeserializeObject<List<Docente>>(ContenidoDelArchivo) == null ? new List<Docente> { } : JsonConvert.DeserializeObject<List<Docente>>(ContenidoDelArchivo);
+                    Docentes = JsonConvert.DeserializeObject<List<Docente>>(ContenidoDelArchivo) ?? new List<Docente> { };
                 }
             }
             return Docentes;
@@ -96,7 +96,7 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoDirectoras, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Directoras = JsonConvert.DeserializeObject<List<Directora>>(ContenidoDelArchivo) == null ? new List<Directora> { } : JsonConvert.DeserializeObject<List<Directora>>(ContenidoDelArchivo);
+                    Directoras = JsonConvert.DeserializeObject<List<Directora>>(ContenidoDelArchivo) ?? new List<Directora> { };
                 }
             }
             return Directoras;
@@ -112,7 +112,7 @@ namespace Logica
                 using (StreamReader Leer = new StreamReader(RutaArchivoUsuarios, false))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Usuarios = JsonConvert.DeserializeObject<List<UsuarioLogin>>(ContenidoDelArchivo) == null ? new List<UsuarioLogin> { } : JsonConvert.DeserializeObject<List<UsuarioLogin>>(ContenidoDelArchivo);
+                    Usuarios = JsonConvert.DeserializeObject<List<UsuarioLogin>>(ContenidoDelArchivo) ?? new List<UsuarioLogin> { };
                 }
             }
             return Usuarios;
