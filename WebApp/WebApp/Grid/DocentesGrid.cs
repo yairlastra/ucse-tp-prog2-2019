@@ -33,7 +33,7 @@ namespace WebApp.Grid
 						  cols.Add().WithColumnName("Nombre").WithHeaderText("Nombre").WithValueExpression(i => i.Nombre).WithSorting(false);
 						  cols.Add().WithColumnName("Apellido").WithHeaderText("Apellido").WithValueExpression(i => i.Apellido).WithSorting(false);
 						  cols.Add().WithColumnName("Email").WithHeaderText("Email").WithValueExpression(i => i.Email).WithSorting(false);					  
-						  cols.Add().WithColumnName("Salas").WithHeaderText("Salas asignadas").WithValueExpression(i => i.Salas != null ? string.Join(", ", i.Salas.Select(x=>x.Nombre)) : string.Empty ).WithSorting(false);					  
+						  cols.Add().WithColumnName("Salas").WithHeaderText("Salas asignadas").WithValueExpression(i => i.Salas != null ? string.Join(", ", i.Salas.Select(x=>x.Nombre)) : string.Empty ).WithSorting(false);
 					  cols.Add().WithColumnName("Details").WithHeaderText("").WithCellCssClassExpression((i, c) => "action").WithHtmlEncoding(false)
 								.WithValueExpression((i, c) =>
 									  string.Format("{0}{1}{2}", 									  

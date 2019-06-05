@@ -107,7 +107,14 @@ namespace Mocks
 
         public Resultado AsignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
         {
-            throw new NotImplementedException();
+            var hijosPadre = padre.Hijos != null ? padre.Hijos.ToList() : new List<Hijo>();
+
+            if (hijosPadre.Any(x => x.Id == hijo.Id) == false)
+                hijosPadre.Add(hijo);
+
+            padre.Hijos = hijosPadre.ToArray();
+
+            return new Resultado();
         }
 
         public Resultado DesasignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
@@ -124,7 +131,14 @@ namespace Mocks
 
         public Resultado DesasignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
         {
-            throw new NotImplementedException();
+            var hijosPadre = padre.Hijos != null ? padre.Hijos.ToList() : new List<Hijo>();
+
+            if (hijosPadre.Any(x => x.Id == hijo.Id) == true)
+                hijosPadre.Remove(hijo);
+
+            padre.Hijos = hijosPadre.ToArray();
+
+            return new Resultado();
         }
 
         public Resultado EditarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)

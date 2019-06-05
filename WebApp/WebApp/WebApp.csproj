@@ -143,6 +143,7 @@
     <Compile Include="Grid\DirectoresGrid.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MVCGridToolbarModel.cs" />
+    <Compile Include="Models\HijoViewModel.cs" />
     <Compile Include="Models\SalaViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -193,6 +194,7 @@
     <Content Include="Views\Padres\Form.cshtml" />
     <Content Include="Views\Alumnos\Form.cshtml" />
     <Content Include="Views\Docentes\Assign.cshtml" />
+    <Content Include="Views\Padres\Assign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Contratos\Contratos.csproj">
