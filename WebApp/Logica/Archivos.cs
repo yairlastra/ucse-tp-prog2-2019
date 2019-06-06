@@ -11,7 +11,14 @@ namespace Logica
 {
     internal sealed class Archivos
     {
-        public static Archivos Instancia { get { return new Archivos(); } }
+        private readonly static Archivos instancia = new Archivos();
+
+        public static Archivos Instancia { get { return instancia; } }
+
+        private Archivos() { }
+
+
+        
 
         private static readonly string UbicacionArchivo = @" C:\Users\lu_ga\Documents\ucse-tp-prog2-2019\WebApp\Archivos\";
 
@@ -20,7 +27,10 @@ namespace Logica
         public static string RutaArchivoPadres = UbicacionArchivo + "Padres.txt";
         public static string RutaArchivoDocentes = UbicacionArchivo + "Docentes.txt";
         public static string RutaArchivoDirectoras = UbicacionArchivo + "Directoras.txt";
-         public static string RutaArchivoUsuarios = UbicacionArchivo + "Usuarios.txt";
+        public static string RutaArchivoUsuarios = UbicacionArchivo + "Usuarios.txt";
+
+
+
 
         public List<Institucion> ObtenerInstituciones()
         {
@@ -117,6 +127,9 @@ namespace Logica
             }
             return Usuarios;
         }
+
+
+
 
         public bool ModificarArchivoInstituciones(List<Institucion> Instituciones)
         {

@@ -1,11 +1,13 @@
 ﻿using Contratos;
-using Mocks;
+using Implementacion;
+//using Mocks;
 using MVCGrid.Models;
 using MVCGrid.Web;
 using Newtonsoft.Json;
 using System.Linq;
 using WebApp;
 using WebApp.Controllers;
+
 
 namespace WebApp.Grid
 {
@@ -53,7 +55,7 @@ namespace WebApp.Grid
                       string globalSearch = options.GetAdditionalQueryOptionString("search");
                       UsuarioLogueado usuarioLogueado = JsonConvert.DeserializeObject<UsuarioLogueado>(options.GetPageParameterString("user"));
 
-                      IServicioWeb servicio = BaseController.CreateService();
+                      IServicioWeb servicio = new ImplementacionService();
                       var data = servicio.ObtenerAlumnos(usuarioLogueado, options.PageIndex.Value, options.ItemsPerPage.Value, globalSearch);
 
 					  return new QueryResult<Hijo>()
