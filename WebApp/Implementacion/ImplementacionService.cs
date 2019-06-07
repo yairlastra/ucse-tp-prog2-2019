@@ -85,6 +85,8 @@ namespace Implementacion
             return null;
         }
 
+
+
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
@@ -199,7 +201,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.AltaHijo(hijo, usuarioLogueado); }
+            { return Logica.Principal.Instancia.AltaHijo(hijo); }
         }
 
         public Resultado AltaPadreMadre(Padre padre, UsuarioLogueado usuarioLogueado)
@@ -207,7 +209,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.AltaPadre(padre, usuarioLogueado); }
+            { return Logica.Principal.Instancia.AltaPadre(padre); }
         }
 
         public Resultado AltaDocente(Docente docente, UsuarioLogueado usuarioLogueado)
@@ -215,7 +217,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.AltaDocente(docente, usuarioLogueado); }
+            { return Logica.Principal.Instancia.AltaDocente(docente); }
         }
 
         public Resultado AltaDirectora(Directora directora, UsuarioLogueado usuarioLogueado)
@@ -223,7 +225,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.AltaDirectora(directora, usuarioLogueado); }
+            { return Logica.Principal.Instancia.AltaDirectora(directora); }
         }
 
         public Hijo ObtenerAlumnoPorId(UsuarioLogueado usuarioLogueado, int id)

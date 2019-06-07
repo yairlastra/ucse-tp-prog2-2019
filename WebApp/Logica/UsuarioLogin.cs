@@ -9,7 +9,19 @@ namespace Logica
 {
     public class UsuarioLogin : Usuario
     {
-        public int Clave { get; set; }
+        public string Clave { get; set; }
         public Roles[] Roles { get; set; }
+
+        public UsuarioLogin(int Id, string Nombre, string Apellido, string Email, string Clave, Roles rol)
+        {
+            this.Id = Id;
+            this.Nombre = Nombre;
+            this.Apellido = Apellido;
+            this.Email = Email;
+            this.Clave = Clave;
+            this.Roles = new Roles[3];
+            this.Roles[0] = rol;
+        }
+
     }
 }

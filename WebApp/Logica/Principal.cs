@@ -11,6 +11,7 @@ namespace Logica
 {
     public sealed class Principal
     {
+
         private readonly static Principal instancia = new Principal();
 
         public static Principal Instancia { get { return instancia; } }
@@ -36,9 +37,18 @@ namespace Logica
         public Directora ObtenerDirectoraPorId(int id)
         { return Archivos.Instancia.ObtenerDirectoras().First(x => x.Id == id); }
 
+       // public UsuarioLogueado ObtenerUsuario(string email, string clave)
+     //   {
+           // Usuario usuario = (Usuario)Archivos.Instancia.ObtenerUsuarios().Find(x => x.Email == email && x.Clave == clave);
 
 
-        public Resultado AltaHijo(Hijo hijo, UsuarioLogueado usuarioLogueado)
+
+           // return   ; 
+      //  }
+
+
+
+        public Resultado AltaHijo(Hijo hijo)
         {
             List<Hijo> Hijos = Archivos.Instancia.ObtenerHijos().ToList();
             hijo.Id = (Hijos.Count) + 1;
@@ -47,31 +57,45 @@ namespace Logica
             return new Resultado();
         }
 
-        public Resultado AltaPadre(Padre padre, UsuarioLogueado usuarioLogueado)
+        public Resultado AltaPadre(Padre padre)
         {
             List<Padre> Padres = Archivos.Instancia.ObtenerPadres().ToList();
             padre.Id = (Padres.Count) + 1;
             Padres.Add(padre);
             Archivos.Instancia.ModificarArchivoPadres(Padres);
+            AltaUsuario(ConvercionDeUsuario((Usuario)padre, Roles.Padre));
             return new Resultado();
         }
 
-        public Resultado AltaDocente(Docente docente, UsuarioLogueado usuarioLogueado)
+        public Resultado AltaDocente(Docente docente)
         {
             List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
             docente.Id = (Docentes.Count) + 1;
             Docentes.Add(docente);
             Archivos.Instancia.ModificarArchivoDocentes(Docentes);
+            AltaUsuario(ConvercionDeUsuario((Usuario)docente, Roles.Docente));
             return new Resultado();
         }
 
-        public Resultado AltaDirectora(Directora directora, UsuarioLogueado usuarioLogueado)
+        public Resultado AltaDirectora(Directora directora)
         {
             List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras().ToList();
             directora.Id = (Directoras.Count) + 1;
             Directoras.Add(directora);
             Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
+            AltaUsuario(ConvercionDeUsuario((Usuario)directora,Roles.Directora));
             return new Resultado();
+        }
+
+        private void AltaUsuario(UsuarioLogin usuario)
+        {
+            List<UsuarioLogin> usuarios = Archivos.Instancia.ObtenerUsuarios().ToList();
+            UsuarioLogin existente = usuarios.Find(x => x.Email == usuario.Email);
+            if (existente == null)
+            { usuarios.Add(usuario); }
+            else
+            {  usuarios.Find(x => x.Email == usuario.Email).Roles[existente.Roles.Count()-1] = usuario.Roles[0]; }
+            Archivos.Instancia.ModificarArchivoUsuarios(usuarios);
         }
 
 
@@ -183,6 +207,13 @@ namespace Logica
                 CantidadRegistros = Archivos.Instancia.ObtenerDirectoras().ToList().Count
             };
         }
+
+
+        private UsuarioLogin ConvercionDeUsuario(Usuario usuario , Roles rol)
+        { return new UsuarioLogin(usuario.Id, usuario.Nombre, usuario.Apellido, usuario.Email, (new Random().Next(1000000)).ToString(), rol); }
+
+
+
 
     }
 }

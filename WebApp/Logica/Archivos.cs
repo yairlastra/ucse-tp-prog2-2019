@@ -17,8 +17,7 @@ namespace Logica
 
         private Archivos() { }
 
-
-        
+      
 
         private static readonly string UbicacionArchivo = @" C:\Users\lu_ga\Documents\ucse-tp-prog2-2019\WebApp\Archivos\";
 
@@ -130,7 +129,6 @@ namespace Logica
 
 
 
-
         public bool ModificarArchivoInstituciones(List<Institucion> Instituciones)
         {
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoInstituciones, false))
@@ -183,7 +181,7 @@ namespace Logica
 
         public bool ModificarArchivoUsuarios(List<UsuarioLogin> Usuarios)
         {
-            using (StreamWriter Escribir = new StreamWriter(RutaArchivoDirectoras, false))
+            using (StreamWriter Escribir = new StreamWriter(RutaArchivoUsuarios, false))
             {
                 string jsonUsuarios = JsonConvert.SerializeObject(Usuarios);
                 Escribir.Write(jsonUsuarios);
