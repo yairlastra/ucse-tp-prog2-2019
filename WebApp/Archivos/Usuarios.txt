@@ -1,1 +1,1 @@
-[{"Clave":"123456","Roles":[1,0,0],"Id":1,"Nombre":"Jabier","Apellido":"Plaza","Email":"director@ucse.com"}]
+[{"Clave":"123456","Roles":[1,0,0],"Id":1,"Nombre":"Jabier","Apellido":"Plaza","Email":"director@ucse.com"},{"Clave":"327206","Roles":[2,0,0],"Id":1,"Nombre":"pipi","Apellido":"exodo","Email":"pepeargento@gmail.com"}]

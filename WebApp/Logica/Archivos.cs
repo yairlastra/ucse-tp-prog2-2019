@@ -26,14 +26,7 @@ namespace Logica
         private static string RutaArchivoPadres = UbicacionArchivo + @"\Padres.txt";
         private static string RutaArchivoDocentes = UbicacionArchivo + @"\Docentes.txt";
         private static string RutaArchivoDirectoras = UbicacionArchivo + @"\Directoras.txt";
-        private static string RutaArchivoUsuarios = UbicacionArchivo + @"\Usuarios.txt";
-
-
-                    
-            
-            
-            
-            
+        private static string RutaArchivoUsuarios = UbicacionArchivo + @"\Usuarios.txt";     
             
             
 
