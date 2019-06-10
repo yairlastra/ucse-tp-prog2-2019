@@ -68,23 +68,11 @@ namespace Implementacion
         }
 
 
+
+
+
         public UsuarioLogueado ObtenerUsuario(string email, string clave)
-        {
-            if (email == "" || clave == "")
-                return null;
-
-            if (email == "directora@ucse.com" && clave == "123456")
-                return new UsuarioLogueado() { Email = email, Nombre = "Usuario", Apellido = "Directora", Roles = new Roles[] { Roles.Directora }, RolSeleccionado = Roles.Directora };
-
-            if (email == "docente@ucse.com" && clave == "123456")
-                return new UsuarioLogueado() { Email = email, Nombre = "Usuario", Apellido = "Docente", Roles = new Roles[] { Roles.Docente }, RolSeleccionado = Roles.Docente };
-
-            if (email == "padre@ucse.com" && clave == "123456")
-                return new UsuarioLogueado() { Email = email, Nombre = "Usuario", Apellido = "Padre", Roles = new Roles[] { Roles.Padre }, RolSeleccionado = Roles.Padre };
-
-            return null;
-        }
-
+        { return Logica.Principal.Instancia.ObtenerUsuario(email, clave); }
 
 
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
@@ -93,7 +81,7 @@ namespace Implementacion
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
 
 
-        
+
         public Grilla<Hijo> ObtenerAlumnos(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))

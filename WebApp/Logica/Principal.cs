@@ -37,14 +37,18 @@ namespace Logica
         public Directora ObtenerDirectoraPorId(int id)
         { return Archivos.Instancia.ObtenerDirectoras().First(x => x.Id == id); }
 
-       // public UsuarioLogueado ObtenerUsuario(string email, string clave)
-     //   {
-           // Usuario usuario = (Usuario)Archivos.Instancia.ObtenerUsuarios().Find(x => x.Email == email && x.Clave == clave);
+       public UsuarioLogueado ObtenerUsuario(string email, string clave)
+       {
+            if (email == "" || clave == "")
+            { return null; }
 
+            UsuarioLogin usuario = Archivos.Instancia.ObtenerUsuarios().Find(x => x.Email == email && x.Clave == clave);
 
-
-           // return   ; 
-      //  }
+            if (usuario is null)
+            { return null; }
+            else
+            { return  ConvercionDeUsuario(usuario); }   
+       }
 
 
 
@@ -83,7 +87,8 @@ namespace Logica
             directora.Id = (Directoras.Count) + 1;
             Directoras.Add(directora);
             Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
-            AltaUsuario(ConvercionDeUsuario((Usuario)directora,Roles.Directora));
+            UsuarioLogin usuario = ConvercionDeUsuario((Usuario)directora, Roles.Directora);
+            AltaUsuario(usuario);
             return new Resultado();
         }
 
@@ -212,7 +217,8 @@ namespace Logica
         private UsuarioLogin ConvercionDeUsuario(Usuario usuario , Roles rol)
         { return new UsuarioLogin(usuario.Id, usuario.Nombre, usuario.Apellido, usuario.Email, (new Random().Next(1000000)).ToString(), rol); }
 
-
+        private UsuarioLogueado ConvercionDeUsuario(UsuarioLogin usuario)
+        { return new UsuarioLogueado() { Email = usuario.Email, Nombre = usuario.Nombre, Apellido = usuario.Apellido, Roles = usuario.Roles , RolSeleccionado = usuario.Roles[0] }; }
 
 
     }
