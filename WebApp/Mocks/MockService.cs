@@ -227,10 +227,7 @@ namespace Mocks
 
         public Resultado MarcarNotaComoLeida(Nota nota, UsuarioLogueado usuarioLogueado)
         {
-            var _notas = _notas1;
-            _notas.AddRange(_notas2);
-            _notas.AddRange(_notas3);
-            _notas.AddRange(_notas4);
+            var _notas = _notas1.Union(_notas2).Union(_notas3).Union(_notas4);
 
             var n = _notas.Single(x => x.Id == nota.Id);
 
@@ -356,10 +353,7 @@ namespace Mocks
 
         public Resultado ResponderNota(Nota nota, Comentario nuevoComentario, UsuarioLogueado usuarioLogueado)
         {
-            var _notas = _notas1;
-            _notas.AddRange(_notas2);
-            _notas.AddRange(_notas3);
-            _notas.AddRange(_notas4);
+            var _notas = _notas1.Union(_notas2).Union(_notas3).Union(_notas4);
 
             var n = _notas.Single(x => x.Id == nota.Id);
             var comentarios = n.Comentarios == null ? new List<Comentario>() : n.Comentarios.ToList();
