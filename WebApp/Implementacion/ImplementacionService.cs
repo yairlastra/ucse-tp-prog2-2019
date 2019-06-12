@@ -55,11 +55,6 @@ namespace Implementacion
             throw new NotImplementedException();
         }
 
-        public Sala[] ObtenerSalasPorInstitucion(UsuarioLogueado usuarioLogueado)
-        {
-            throw new NotImplementedException();
-        }
-
 
 
         public Resultado ResponderNota(Nota nota, Comentario nuevoComentario, UsuarioLogueado usuarioLogueado)
@@ -71,8 +66,13 @@ namespace Implementacion
 
 
 
-        public UsuarioLogueado ObtenerUsuario(string email, string clave)
-        { return Logica.Principal.Instancia.ObtenerUsuario(email, clave); }
+        public Sala[] ObtenerSalasPorInstitucion(UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { throw new NotImplementedException(); }
+        }
 
 
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
@@ -113,6 +113,9 @@ namespace Implementacion
             else
             { return Logica.Principal.Instancia.ObtenerGrillaDirectoras(paginaActual, totalPorPagina, busquedaGlobal); }   
         }
+
+        public UsuarioLogueado ObtenerUsuario(string email, string clave)
+        { return Logica.Principal.Instancia.ObtenerUsuario(email, clave); }
 
 
 

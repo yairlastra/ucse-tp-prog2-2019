@@ -67,7 +67,8 @@ namespace Logica
             padre.Id = (Padres.Count) + 1;
             Padres.Add(padre);
             Archivos.Instancia.ModificarArchivoPadres(Padres);
-            AltaUsuario(ConvercionDeUsuario((Usuario)padre, Roles.Padre));
+            UsuarioLogin usuario = ConvercionDeUsuario((Usuario)padre, Roles.Padre);
+            AltaUsuario(usuario);
             return new Resultado();
         }
 
@@ -77,7 +78,8 @@ namespace Logica
             docente.Id = (Docentes.Count) + 1;
             Docentes.Add(docente);
             Archivos.Instancia.ModificarArchivoDocentes(Docentes);
-            AltaUsuario(ConvercionDeUsuario((Usuario)docente, Roles.Docente));
+            UsuarioLogin usuario = ConvercionDeUsuario((Usuario)docente, Roles.Docente);
+            AltaUsuario(usuario);
             return new Resultado();
         }
 
@@ -99,7 +101,11 @@ namespace Logica
             if (existente == null)
             { usuarios.Add(usuario); }
             else
-            {  usuarios.Find(x => x.Email == usuario.Email).Roles[existente.Roles.Count()-1] = usuario.Roles[0]; }
+            {
+                List<Roles> roles = usuarios.Find(x => x.Email == usuario.Email).Roles.ToList();
+                roles.Add(usuario.Roles[0]);
+                usuarios.Find(x => x.Email == usuario.Email).Roles = roles.ToArray();
+            }
             Archivos.Instancia.ModificarArchivoUsuarios(usuarios);
         }
 
@@ -117,6 +123,7 @@ namespace Logica
         public Resultado EditarPadre(int id, Padre padre)
         {
             List<Padre> Padres = Archivos.Instancia.ObtenerPadres().ToList();
+            EditarUsuario((Usuario)padre, Padres.Find(x => x.Id == id).Email, Roles.Padre);
             Padres.RemoveAll(x => x.Id == id);
             Padres.Add(padre);
             Archivos.Instancia.ModificarArchivoPadres(Padres);
@@ -126,6 +133,7 @@ namespace Logica
         public Resultado EditarDocente(int id, Docente docente)
         {
             List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
+            EditarUsuario((Usuario)docente, Docentes.Find(x => x.Id == id).Email, Roles.Docente);
             Docentes.RemoveAll(x => x.Id == id);
             Docentes.Add(docente);
             Archivos.Instancia.ModificarArchivoDocentes(Docentes);
@@ -135,10 +143,19 @@ namespace Logica
         public Resultado EditarDirectora(int id, Directora directora)
         {
             List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras().ToList();
+            EditarUsuario((Usuario)directora, Directoras.Find(x => x.Id == id).Email, Roles.Directora);
             Directoras.RemoveAll(x => x.Id == id);
             Directoras.Add(directora);
             Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
             return new Resultado();
+        }
+
+        private void EditarUsuario(Usuario usuario , string Email, Roles rol)
+        {
+            List<UsuarioLogin> lista = Archivos.Instancia.ObtenerUsuarios().ToList();
+            lista.RemoveAll(x => x.Email == Email);
+            lista.Add(ConvercionDeUsuario(usuario, rol));
+            Archivos.Instancia.ModificarArchivoUsuarios(lista);
         }
 
 
@@ -154,6 +171,7 @@ namespace Logica
         public Resultado EliminarPadre(int id)
         {
             List<Padre> Padres = Archivos.Instancia.ObtenerPadres().ToList();
+            EliminarUsuario((Usuario)Padres.Find(x => x.Id == id), Roles.Padre);
             Padres.RemoveAll(x => x.Id == id);
             Archivos.Instancia.ModificarArchivoPadres(Padres);
             return new Resultado();
@@ -162,6 +180,7 @@ namespace Logica
         public Resultado EliminarDocente(int id)
         {
             List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
+            EliminarUsuario((Usuario)Docentes.Find(x => x.Id == id), Roles.Docente);
             Docentes.RemoveAll(x => x.Id == id);
             Archivos.Instancia.ModificarArchivoDocentes(Docentes);
             return new Resultado();
@@ -170,10 +189,22 @@ namespace Logica
         public Resultado EliminarDirectora(int id)
         {
             List <Directora> Directoras = Archivos.Instancia.ObtenerDirectoras().ToList();
+            EliminarUsuario((Usuario)Directoras.Find(x => x.Id == id), Roles.Directora);
             Directoras.RemoveAll(x => x.Id == id);
             Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
             return new Resultado();
-        } 
+        }
+
+        private void EliminarUsuario(Usuario usuario, Roles rol)
+        {
+            List<UsuarioLogin> lista = Archivos.Instancia.ObtenerUsuarios().ToList();
+            UsuarioLogin ElUsuario = lista.Find(x => x.Email == ConvercionDeUsuario(usuario, rol).Email);
+            if (ElUsuario.Roles.Count() > 1)
+            { lista.Find(x => x == ElUsuario).Roles = ElUsuario.Roles.Where(x => x != rol).ToArray(); }
+            else
+            { lista.RemoveAll(x => x.Email == ConvercionDeUsuario(usuario, rol).Email); }            
+            Archivos.Instancia.ModificarArchivoUsuarios(lista);
+        }
 
 
 
@@ -221,5 +252,12 @@ namespace Logica
         { return new UsuarioLogueado() { Email = usuario.Email, Nombre = usuario.Nombre, Apellido = usuario.Apellido, Roles = usuario.Roles , RolSeleccionado = usuario.Roles[0] }; }
 
 
+
+        // public Sala[] ObtenerSalasPorInstitucion(UsuarioLogueado usuarioLogueado)
+        // {
+        //Archivos.Instancia.ObtenerInstituciones().Select(x => x.).ToArray()
+
+
+        //}
     }
 }

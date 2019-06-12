@@ -19,8 +19,7 @@ namespace Logica
             this.Apellido = Apellido;
             this.Email = Email;
             this.Clave = Clave;
-            this.Roles = new Roles[3];
-            this.Roles[0] = rol;
+            this.Roles = new Roles[] { rol };
         }
 
     }

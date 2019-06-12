@@ -17,91 +17,113 @@ namespace Logica
 
         private Archivos() {  }
 
-            //if (!Directory.Exists(UbicacionArchivo)) { Directory.CreateDirectory(UbicacionArchivo); }
+
 
         private static readonly string UbicacionArchivo = @" C:\Users\lu_ga\Documents\ucse-tp-prog2-2019\WebApp\Archivos";
 
-        private static string RutaArchivoInstituciones =UbicacionArchivo + @"\Instituciones.txt";
-        private static string RutaArchivoHijos =UbicacionArchivo + @"\Hijos.txt";
-        private static string RutaArchivoPadres = UbicacionArchivo + @"\Padres.txt";
-        private static string RutaArchivoDocentes = UbicacionArchivo + @"\Docentes.txt";
-        private static string RutaArchivoDirectoras = UbicacionArchivo + @"\Directoras.txt";
-        private static string RutaArchivoUsuarios = UbicacionArchivo + @"\Usuarios.txt";     
+        private static readonly string RutaArchivoInstituciones = UbicacionArchivo + @"\Instituciones.txt";
+        private static readonly string RutaArchivoHijos =UbicacionArchivo + @"\Hijos.txt";
+        private static readonly string RutaArchivoPadres = UbicacionArchivo + @"\Padres.txt";
+        private static readonly string RutaArchivoDocentes = UbicacionArchivo + @"\Docentes.txt";
+        private static readonly string RutaArchivoDirectoras = UbicacionArchivo + @"\Directoras.txt";
+        private static readonly string RutaArchivoUsuarios = UbicacionArchivo + @"\Usuarios.txt";     
             
             
 
         public List<Institucion> ObtenerInstituciones()
         {
-            if (!File.Exists(RutaArchivoInstituciones)) { File.Create(RutaArchivoInstituciones); }
-            List <Institucion> Instituciones = new List<Institucion> { };
+            List<Institucion> Instituciones = new List<Institucion> { };
+            if (!File.Exists(RutaArchivoInstituciones))
+            { File.Create(RutaArchivoInstituciones); }
+            else
+            {
                 using (StreamReader Leer = new StreamReader(RutaArchivoInstituciones, true))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Instituciones = JsonConvert.DeserializeObject<List<Institucion>>(ContenidoDelArchivo) ?? new List<Institucion> { };
+                    Instituciones = JsonConvert.DeserializeObject<List<Institucion>>(ContenidoDelArchivo);
                 }
-            return Instituciones;
+            }
+            return Instituciones ?? new List<Institucion> { };
         }
 
         public List<Hijo> ObtenerHijos()
         {
-            if (!File.Exists(RutaArchivoHijos)) { File.Create(RutaArchivoHijos); }
             List<Hijo> Hijos = new List<Hijo> { };
+            if (!File.Exists(RutaArchivoHijos))
+            { File.Create(RutaArchivoHijos); }
+            else
+            {
                 using (StreamReader Leer = new StreamReader(RutaArchivoHijos, true))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Hijos = JsonConvert.DeserializeObject<List<Hijo>>(ContenidoDelArchivo) ?? new List<Hijo> { };
+                    Hijos = JsonConvert.DeserializeObject<List<Hijo>>(ContenidoDelArchivo);
                 }
-            return Hijos;
+            }
+            return Hijos ?? new List<Hijo> { };
         }
 
         public List<Padre> ObtenerPadres()
         {
-            if (!File.Exists(RutaArchivoPadres)) { File.Create(RutaArchivoPadres); }
             List<Padre> Padres = new List<Padre> { };
-            using (StreamReader Leer = new StreamReader(RutaArchivoPadres, true))
+            if (!File.Exists(RutaArchivoPadres))
+            { File.Create(RutaArchivoPadres); }
+            else
             {
-                string ContenidoDelArchivo = Leer.ReadToEnd();
-                Padres = JsonConvert.DeserializeObject<List<Padre>>(ContenidoDelArchivo) ?? new List<Padre> { };
+                using (StreamReader Leer = new StreamReader(RutaArchivoPadres, true))
+                {
+                    string ContenidoDelArchivo = Leer.ReadToEnd();
+                    Padres = JsonConvert.DeserializeObject<List<Padre>>(ContenidoDelArchivo);
+                }
             }
-            return Padres;
+            return Padres ?? new List<Padre> { };
         }
 
         public List<Docente> ObtenerDocentes()
         {
-            if (!File.Exists(RutaArchivoDocentes)) { File.Create(RutaArchivoDocentes); }
             List<Docente> Docentes = new List<Docente> { };
-            using (StreamReader Leer = new StreamReader(RutaArchivoDocentes, true))
-            {
-                string ContenidoDelArchivo = Leer.ReadToEnd();
-                Docentes = JsonConvert.DeserializeObject<List<Docente>>(ContenidoDelArchivo) ?? new List<Docente> { };
+            if (!File.Exists(RutaArchivoDocentes))
+            { File.Create(RutaArchivoDocentes); }
+            else
+            { 
+                using (StreamReader Leer = new StreamReader(RutaArchivoDocentes, true))
+                {
+                    string ContenidoDelArchivo = Leer.ReadToEnd();
+                    Docentes = JsonConvert.DeserializeObject<List<Docente>>(ContenidoDelArchivo);
+                }  
             }
-
-            return Docentes;
+            return Docentes ?? new List<Docente> { };
         }
 
         public List<Directora> ObtenerDirectoras()
         {
-            if (!File.Exists(RutaArchivoDirectoras)) { File.Create(RutaArchivoDirectoras); }
             List<Directora> Directoras = new List<Directora> { };
-            using (StreamReader Leer = new StreamReader(RutaArchivoDirectoras, true))
+            if (!File.Exists(RutaArchivoDirectoras))
+            { File.Create(RutaArchivoDirectoras); }
+            else
             {
+                using (StreamReader Leer = new StreamReader(RutaArchivoDirectoras, true))
+                {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Directoras = JsonConvert.DeserializeObject<List<Directora>>(ContenidoDelArchivo) ?? new List<Directora> { };
+                    Directoras = JsonConvert.DeserializeObject<List<Directora>>(ContenidoDelArchivo);
+                }
             }
-            
-            return Directoras;
+            return Directoras ?? new List<Directora> { };
         }
 
         public List<UsuarioLogin> ObtenerUsuarios()
         {
-            if (!File.Exists(RutaArchivoUsuarios)) { File.Create(RutaArchivoUsuarios); }
             List<UsuarioLogin> Usuarios = new List<UsuarioLogin> { };
+            if (!File.Exists(RutaArchivoUsuarios))
+            { File.Create(RutaArchivoUsuarios); }
+            else
+            {
                 using (StreamReader Leer = new StreamReader(RutaArchivoUsuarios, true))
                 {
                     string ContenidoDelArchivo = Leer.ReadToEnd();
-                    Usuarios = JsonConvert.DeserializeObject<List<UsuarioLogin>>(ContenidoDelArchivo) ?? new List<UsuarioLogin> { };
+                    Usuarios = JsonConvert.DeserializeObject<List<UsuarioLogin>>(ContenidoDelArchivo) ;
                 }
-            return Usuarios;
+            }
+            return Usuarios ?? new List<UsuarioLogin> { };
         }
 
 
