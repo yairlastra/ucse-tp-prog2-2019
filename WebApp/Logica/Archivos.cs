@@ -19,16 +19,17 @@ namespace Logica
 
 
 
-        private static readonly string UbicacionArchivo = @" C:\Users\lu_ga\Documents\ucse-tp-prog2-2019\WebApp\Archivos";
 
-        private static readonly string RutaArchivoInstituciones = UbicacionArchivo + @"\Instituciones.txt";
-        private static readonly string RutaArchivoHijos =UbicacionArchivo + @"\Hijos.txt";
-        private static readonly string RutaArchivoPadres = UbicacionArchivo + @"\Padres.txt";
-        private static readonly string RutaArchivoDocentes = UbicacionArchivo + @"\Docentes.txt";
-        private static readonly string RutaArchivoDirectoras = UbicacionArchivo + @"\Directoras.txt";
-        private static readonly string RutaArchivoUsuarios = UbicacionArchivo + @"\Usuarios.txt";     
-            
-            
+        private static readonly string RutaArchivoInstituciones = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Instituciones.txt");
+        private static readonly string RutaArchivoHijos = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Hijos.txt");
+        private static readonly string RutaArchivoPadres = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Padres.txt");
+        private static readonly string RutaArchivoDocentes = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Docentes.txt");
+        private static readonly string RutaArchivoDirectoras = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Directoras.txt");
+        private static readonly string RutaArchivoUsuarios = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Usuarios.txt");
+        private static readonly string RutaArchivoSalas = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Salas.txt");
+
+
+
 
         public List<Institucion> ObtenerInstituciones()
         {
@@ -125,6 +126,23 @@ namespace Logica
             }
             return Usuarios ?? new List<UsuarioLogin> { };
         }
+
+        public List<Sala> ObtenerSalas()
+        {
+            List<Sala> Salas = new List<Sala> { };
+            if (!File.Exists(RutaArchivoSalas))
+            { File.Create(RutaArchivoSalas); }
+            else
+            {
+                using (StreamReader Leer = new StreamReader(RutaArchivoSalas, true))
+                {
+                    string ContenidoDelArchivo = Leer.ReadToEnd();
+                    Salas = JsonConvert.DeserializeObject<List<Sala>>(ContenidoDelArchivo);
+                }
+            }
+            return Salas ?? new List<Sala> { };
+        }
+
 
 
 

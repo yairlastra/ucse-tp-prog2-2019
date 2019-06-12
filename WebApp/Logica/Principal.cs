@@ -55,7 +55,7 @@ namespace Logica
         public Resultado AltaHijo(Hijo hijo)
         {
             List<Hijo> Hijos = Archivos.Instancia.ObtenerHijos().ToList();
-            hijo.Id = (Hijos.Count) + 1;
+            hijo.Id = (Hijos.Count == 0 ? 0 : Hijos.Max(x => x.Id)) + 1;
             Hijos.Add(hijo);
             Archivos.Instancia.ModificarArchivoHijos(Hijos);
             return new Resultado();
@@ -64,7 +64,7 @@ namespace Logica
         public Resultado AltaPadre(Padre padre)
         {
             List<Padre> Padres = Archivos.Instancia.ObtenerPadres().ToList();
-            padre.Id = (Padres.Count) + 1;
+            padre.Id = (Padres.Count == 0 ? 0 : Padres.Max(x => x.Id)) + 1;
             Padres.Add(padre);
             Archivos.Instancia.ModificarArchivoPadres(Padres);
             UsuarioLogin usuario = ConvercionDeUsuario((Usuario)padre, Roles.Padre);
@@ -75,7 +75,7 @@ namespace Logica
         public Resultado AltaDocente(Docente docente)
         {
             List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
-            docente.Id = (Docentes.Count) + 1;
+            docente.Id = (Docentes.Count == 0 ? 0 : Docentes.Max(x => x.Id)) + 1;
             Docentes.Add(docente);
             Archivos.Instancia.ModificarArchivoDocentes(Docentes);
             UsuarioLogin usuario = ConvercionDeUsuario((Usuario)docente, Roles.Docente);
@@ -86,7 +86,7 @@ namespace Logica
         public Resultado AltaDirectora(Directora directora)
         {
             List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras().ToList();
-            directora.Id = (Directoras.Count) + 1;
+            directora.Id = (Directoras.Count == 0 ? 0 : Directoras.Max(x => x.Id)) + 1;
             Directoras.Add(directora);
             Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
             UsuarioLogin usuario = ConvercionDeUsuario((Usuario)directora, Roles.Directora);
@@ -108,6 +108,7 @@ namespace Logica
             }
             Archivos.Instancia.ModificarArchivoUsuarios(usuarios);
         }
+
 
 
 
@@ -160,6 +161,7 @@ namespace Logica
 
 
 
+
         public Resultado EliminarHijo(int id)
         {
             List<Hijo> Hijos = Archivos.Instancia.ObtenerHijos().ToList();
@@ -208,41 +210,52 @@ namespace Logica
 
 
 
+
         public Grilla<Hijo> ObtenerGrillaAlumnos(int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
+            List<Hijo> hijos = Archivos.Instancia.ObtenerHijos();
+            IQueryable<Hijo> Query = hijos.Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal)).AsQueryable();
             return new Grilla<Hijo>()
             {
-                Lista = Archivos.Instancia.ObtenerHijos().Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal)).Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
-                CantidadRegistros = Archivos.Instancia.ObtenerHijos().ToList().Count
+                Lista = Query.Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
+                CantidadRegistros = Query.Count()
             };
         }
 
         public Grilla<Padre> ObtenerGrillaPadres(int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
+            List<Padre> padres = Archivos.Instancia.ObtenerPadres();
+            IQueryable<Padre> Query = padres.Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal)).AsQueryable();
             return new Grilla<Padre>()
             {
-                Lista = Archivos.Instancia.ObtenerPadres().Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal)).Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
-                CantidadRegistros = Archivos.Instancia.ObtenerPadres().ToList().Count
+                Lista = Query.Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
+                CantidadRegistros = Query.Count()
             };
         }
 
         public Grilla<Docente> ObtenerGrillaDocentes(int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
+            List<Docente> docentes = Archivos.Instancia.ObtenerDocentes();
+            IQueryable<Docente> Query = docentes.Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal)).AsQueryable();
             return new Grilla<Docente>()
             {
-                Lista = Archivos.Instancia.ObtenerDocentes().Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal)).Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
-                CantidadRegistros = Archivos.Instancia.ObtenerDocentes().ToList().Count
+                Lista = Query.Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
+                CantidadRegistros = Query.Count()
             };
         }
 
         public Grilla<Directora> ObtenerGrillaDirectoras(int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
+            List<Directora> directoras = Archivos.Instancia.ObtenerDirectoras();
+            IQueryable<Directora> Query = directoras.Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal)).AsQueryable();
             return new Grilla<Directora>()
             {
-                Lista = Archivos.Instancia.ObtenerDirectoras().Where(x => string.IsNullOrEmpty(busquedaGlobal) || x.Nombre.Contains(busquedaGlobal) || x.Apellido.Contains(busquedaGlobal)).Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
+                Lista = Query.Skip(paginaActual * totalPorPagina).Take(totalPorPagina).ToArray(),
                 CantidadRegistros = Archivos.Instancia.ObtenerDirectoras().ToList().Count
             };
         }
+
+
 
 
         private UsuarioLogin ConvercionDeUsuario(Usuario usuario , Roles rol)
@@ -253,11 +266,8 @@ namespace Logica
 
 
 
-        // public Sala[] ObtenerSalasPorInstitucion(UsuarioLogueado usuarioLogueado)
-        // {
-        //Archivos.Instancia.ObtenerInstituciones().Select(x => x.).ToArray()
 
-
-        //}
+        public Sala[] ObtenerSalasPorInstitucion()
+        { return Archivos.Instancia.ObtenerSalas().ToArray(); }
     }
 }

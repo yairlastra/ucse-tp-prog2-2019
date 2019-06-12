@@ -1,0 +1,1 @@
+[{"Id":1,"Nombre":"Matematicas"},{"Id":2,"Nombre":"Laboratorio"},{"Id":3,"Nombre":"informatica"},{"Id":4,"Nombre":"Probabilidad y estadistica"},{"Id":5,"Nombre":"DSI"}]

@@ -66,13 +66,6 @@ namespace Implementacion
 
 
 
-        public Sala[] ObtenerSalasPorInstitucion(UsuarioLogueado usuarioLogueado)
-        {
-            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
-            { throw new NotImplementedException(); }
-            else
-            { throw new NotImplementedException(); }
-        }
 
 
         // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
@@ -119,6 +112,8 @@ namespace Implementacion
 
 
 
+
+
         public Resultado EliminarAlumno(int id, Hijo hijo, UsuarioLogueado usuarioLogueado)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
@@ -153,6 +148,8 @@ namespace Implementacion
 
 
 
+
+
         public Resultado EditarAlumno(int id, Hijo hijo, UsuarioLogueado usuarioLogueado)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
@@ -184,6 +181,8 @@ namespace Implementacion
             else
             { return Logica.Principal.Instancia.EditarDirectora(id, directora); }
         }
+
+
 
 
 
@@ -254,7 +253,22 @@ namespace Implementacion
         public Institucion[] ObtenerInstituciones()
         { return Logica.Principal.Instancia.ObtenerInstituciones(); }
 
+
+
+
+
         public string ObtenerNombreGrupo()
         { return $"Lastra - Belmonte - Balaudo"; }
+
+        public Sala[] ObtenerSalasPorInstitucion(UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora) && !usuarioLogueado.Roles.Contains(Roles.Docente))
+            { throw new NotImplementedException(); }
+            else
+            { return Logica.Principal.Instancia.ObtenerSalasPorInstitucion(); }
+        }
+
+
+
     }
 }
