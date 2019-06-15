@@ -11,11 +11,6 @@ namespace Implementacion
     public class ImplementacionService : IServicioWeb
     {
 
-        public Resultado AltaNota(Nota nota, Sala[] salas, Hijo[] hijos, UsuarioLogueado usuarioLogueado)
-        {
-            throw new NotImplementedException();
-        }
-
         public Resultado AsignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
         {
             throw new NotImplementedException();
@@ -50,18 +45,10 @@ namespace Implementacion
         }
 
 
-        public Hijo[] ObtenerPersonas(UsuarioLogueado usuarioLogueado)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
         public Resultado ResponderNota(Nota nota, Comentario nuevoComentario, UsuarioLogueado usuarioLogueado)
         {
             throw new NotImplementedException();
         }
-
 
 
 
@@ -80,7 +67,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.ObtenerGrillaAlumnos(paginaActual, totalPorPagina, busquedaGlobal); }
+            { return Principal.Instancia.ObtenerGrillaAlumnos(paginaActual, totalPorPagina, busquedaGlobal); }
         }
 
         public Grilla<Padre> ObtenerPadres(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
@@ -88,7 +75,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.ObtenerGrillaPadres(paginaActual, totalPorPagina, busquedaGlobal); }
+            { return Principal.Instancia.ObtenerGrillaPadres(paginaActual, totalPorPagina, busquedaGlobal); }
         }
 
         public Grilla<Docente> ObtenerDocentes(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
@@ -96,7 +83,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.ObtenerGrillaDocentes(paginaActual, totalPorPagina, busquedaGlobal); }
+            { return Principal.Instancia.ObtenerGrillaDocentes(paginaActual, totalPorPagina, busquedaGlobal); }
         }
 
         public Grilla<Directora> ObtenerDirectoras(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
@@ -104,11 +91,14 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.ObtenerGrillaDirectoras(paginaActual, totalPorPagina, busquedaGlobal); }   
+            { return Principal.Instancia.ObtenerGrillaDirectoras(paginaActual, totalPorPagina, busquedaGlobal); }   
         }
 
         public UsuarioLogueado ObtenerUsuario(string email, string clave)
-        { return Logica.Principal.Instancia.ObtenerUsuario(email, clave); }
+        { return Principal.Instancia.ObtenerUsuario(email, clave); }
+
+        public Hijo[] ObtenerPersonas(UsuarioLogueado usuarioLogueado)
+        { return Principal.Instancia.ObtenerPersonas(usuarioLogueado); }
 
 
 
@@ -119,7 +109,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.EliminarHijo(id); }
+            { return Principal.Instancia.EliminarHijo(id); }
         }
 
         public Resultado EliminarPadreMadre(int id, Padre padre, UsuarioLogueado usuarioLogueado)
@@ -127,7 +117,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.EliminarPadre(id); }
+            { return Principal.Instancia.EliminarPadre(id); }
         }
 
         public Resultado EliminarDocente(int id, Docente docente, UsuarioLogueado usuarioLogueado)
@@ -135,7 +125,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.EliminarDocente(id); }
+            { return Principal.Instancia.EliminarDocente(id); }
         }
 
         public Resultado EliminarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)
@@ -143,7 +133,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.EliminarDirectora(id); }
+            { return Principal.Instancia.EliminarDirectora(id); }
         }
 
 
@@ -155,7 +145,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.EditarHijo(id, hijo); }
+            { return Principal.Instancia.EditarHijo(id, hijo); }
         }
 
         public Resultado EditarPadreMadre(int id, Padre padre, UsuarioLogueado usuarioLogueado)
@@ -163,7 +153,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.EditarPadre(id, padre); }
+            { return Principal.Instancia.EditarPadre(id, padre); }
         }
 
         public Resultado EditarDocente(int id, Docente docente, UsuarioLogueado usuarioLogueado)
@@ -171,7 +161,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.EditarDocente(id, docente); }
+            { return Principal.Instancia.EditarDocente(id, docente); }
         }
 
         public Resultado EditarDirectora(int id, Directora directora, UsuarioLogueado usuarioLogueado)
@@ -179,7 +169,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.EditarDirectora(id, directora); }
+            { return Principal.Instancia.EditarDirectora(id, directora); }
         }
 
 
@@ -191,7 +181,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.AltaHijo(hijo); }
+            { return Principal.Instancia.AltaHijo(hijo); }
         }
 
         public Resultado AltaPadreMadre(Padre padre, UsuarioLogueado usuarioLogueado)
@@ -199,7 +189,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.AltaPadre(padre); }
+            { return Principal.Instancia.AltaPadre(padre); }
         }
 
         public Resultado AltaDocente(Docente docente, UsuarioLogueado usuarioLogueado)
@@ -207,7 +197,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.AltaDocente(docente); }
+            { return Principal.Instancia.AltaDocente(docente); }
         }
 
         public Resultado AltaDirectora(Directora directora, UsuarioLogueado usuarioLogueado)
@@ -215,15 +205,27 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.AltaDirectora(directora); }
+            { return Principal.Instancia.AltaDirectora(directora); }
         }
+
+        public Resultado AltaNota(Nota nota, Sala[] salas, Hijo[] hijos, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Principal.Instancia.AltaNota(nota,salas,hijos); }
+        }
+
+
+
+
 
         public Hijo ObtenerAlumnoPorId(UsuarioLogueado usuarioLogueado, int id)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.ObtenerAlumnoPorId(id); }
+            { return Principal.Instancia.ObtenerAlumnoPorId(id); }
         }
 
         public Padre ObtenerPadrePorId(UsuarioLogueado usuarioLogueado, int id)
@@ -231,7 +233,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.ObtenerPadrePorId(id); }
+            { return Principal.Instancia.ObtenerPadrePorId(id); }
         }
 
         public Docente ObtenerDocentePorId(UsuarioLogueado usuarioLogueado, int id)
@@ -239,7 +241,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.ObtenerDocentePorId(id); }
+            { return Principal.Instancia.ObtenerDocentePorId(id); }
         }
 
         public Directora ObtenerDirectoraPorId(UsuarioLogueado usuarioLogueado, int id)
@@ -247,11 +249,11 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.ObtenerDirectoraPorId(id); }
+            { return Principal.Instancia.ObtenerDirectoraPorId(id); }
         }
 
         public Institucion[] ObtenerInstituciones()
-        { return Logica.Principal.Instancia.ObtenerInstituciones(); }
+        { return Principal.Instancia.ObtenerInstituciones(); }
 
 
 
@@ -265,7 +267,7 @@ namespace Implementacion
             if (!usuarioLogueado.Roles.Contains(Roles.Directora) && !usuarioLogueado.Roles.Contains(Roles.Docente))
             { throw new NotImplementedException(); }
             else
-            { return Logica.Principal.Instancia.ObtenerSalasPorInstitucion(); }
+            { return Principal.Instancia.ObtenerSalasPorInstitucion(); }
         }
 
 

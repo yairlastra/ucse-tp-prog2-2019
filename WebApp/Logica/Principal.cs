@@ -37,7 +37,25 @@ namespace Logica
         public Directora ObtenerDirectoraPorId(int id)
         { return Archivos.Instancia.ObtenerDirectoras().First(x => x.Id == id); }
 
-       public UsuarioLogueado ObtenerUsuario(string email, string clave)
+        public Hijo[] ObtenerPersonas(UsuarioLogueado usuarioLogueado)
+        {
+            List<Hijo> ListaHijos = Archivos.Instancia.ObtenerHijos();
+            switch (usuarioLogueado.RolSeleccionado)
+            {
+                case Roles.Padre:
+                    Padre padre = Archivos.Instancia.ObtenerPadres().Find(x => x.Nombre == usuarioLogueado.Nombre && x.Apellido == usuarioLogueado.Apellido);
+                    return ListaHijos.Where(x => padre.Hijos.Contains(x)).ToArray();
+                case Roles.Directora:
+                    return ListaHijos.ToArray();
+                case Roles.Docente:
+                    Docente docente = Archivos.Instancia.ObtenerDocentes().Find(x => x.Nombre == usuarioLogueado.Nombre && x.Apellido == usuarioLogueado.Apellido);
+                    return ListaHijos.Where(x => docente.Salas.Contains(x.Sala)).ToArray();
+                default:
+                    throw new Exception("Rol no implementado");
+            }
+        }
+
+        public UsuarioLogueado ObtenerUsuario(string email, string clave)
        {
             if (email == "" || clave == "")
             { return null; }
@@ -91,6 +109,31 @@ namespace Logica
             Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
             UsuarioLogin usuario = ConvercionDeUsuario((Usuario)directora, Roles.Directora);
             AltaUsuario(usuario);
+            return new Resultado();
+        }
+
+        public Resultado AltaNota(Nota nota, Sala[] salas, Hijo[] hijos)
+        {
+            List<Hijo> ListaHijos = Archivos.Instancia.ObtenerHijos();
+
+            if (hijos == null || hijos.Length >= 0)
+            {
+                hijos = new Hijo[] { };
+                foreach (var sala in salas)
+                { hijos.Concat(ListaHijos.Where(x => x.Sala.Id == sala.Id)); }
+            }
+
+            foreach (int id in hijos.ToList().Select(x => x.Id))
+            {
+                Hijo hijo = ListaHijos.Single(x => x.Id == id);
+                if (hijo.Notas is null)
+                { hijo.Notas = new Nota[] { nota }; }
+                else
+                { hijo.Notas[hijo.Notas.Length] = nota; };
+            }
+
+            Archivos.Instancia.ModificarArchivoHijos(ListaHijos);
+
             return new Resultado();
         }
 
@@ -269,5 +312,11 @@ namespace Logica
 
         public Sala[] ObtenerSalasPorInstitucion()
         { return Archivos.Instancia.ObtenerSalas().ToArray(); }
+
+        
+
+
+
+
     }
 }
