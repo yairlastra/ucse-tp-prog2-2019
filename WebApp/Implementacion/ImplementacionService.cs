@@ -11,46 +11,6 @@ namespace Implementacion
     public class ImplementacionService : IServicioWeb
     {
 
-        public Resultado AsignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Resultado AsignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Resultado DesasignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Resultado DesasignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Resultado MarcarNotaComoLeida(Nota nota, UsuarioLogueado usuarioLogueado)
-        {
-            throw new NotImplementedException();
-        }
-
-
-
-
-        public Nota[] ObtenerCuadernoComunicaciones(int idPersona, UsuarioLogueado usuarioLogueado)
-        {
-            throw new NotImplementedException();
-        }
-
-
-        public Resultado ResponderNota(Nota nota, Comentario nuevoComentario, UsuarioLogueado usuarioLogueado)
-        {
-            throw new NotImplementedException();
-        }
-
-
 
 
 
@@ -270,6 +230,52 @@ namespace Implementacion
             { return Principal.Instancia.ObtenerSalasPorInstitucion(); }
         }
 
+        public Resultado MarcarNotaComoLeida(Nota nota, UsuarioLogueado usuarioLogueado)
+        { return Logica.Principal.Instancia.MarcarNotaComoLeida(nota, usuarioLogueado); }
+
+        public Resultado ResponderNota(Nota nota, Comentario nuevoComentario, UsuarioLogueado usuarioLogueado)
+        {
+            return Logica.Principal.Instancia.ResponderNota(nota, nuevoComentario, usuarioLogueado);
+        }
+
+
+
+
+
+        public Resultado AsignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Principal.Instancia.AsignarHijoPadre(hijo,padre); }
+        }
+
+        public Resultado DesasignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Principal.Instancia.DesasignarHijoPadre(hijo, padre); }
+        }
+
+        public Resultado AsignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Principal.Instancia.AsignarDocenteSala(docente, sala); }
+        }
+
+        public Resultado DesasignarDocenteSala(Docente docente, Sala sala, UsuarioLogueado usuarioLogueado)
+        {
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            { throw new NotImplementedException(); }
+            else
+            { return Principal.Instancia.DesasignarDocenteSala(docente, sala); }
+        }
+
+        public Nota[] ObtenerCuadernoComunicaciones(int idPersona, UsuarioLogueado usuarioLogueado)
+        { return Logica.Principal.Instancia.ObtenerPersonas(usuarioLogueado).First(x => x.Id == idPersona).Notas; }
 
 
     }

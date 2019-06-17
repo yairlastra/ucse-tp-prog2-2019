@@ -74,6 +74,7 @@ namespace Logica
         {
             List<Hijo> Hijos = Archivos.Instancia.ObtenerHijos().ToList();
             hijo.Id = (Hijos.Count == 0 ? 0 : Hijos.Max(x => x.Id)) + 1;
+            hijo.Notas = new Nota[] {};
             Hijos.Add(hijo);
             Archivos.Instancia.ModificarArchivoHijos(Hijos);
             return new Resultado();
@@ -94,6 +95,7 @@ namespace Logica
         {
             List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
             docente.Id = (Docentes.Count == 0 ? 0 : Docentes.Max(x => x.Id)) + 1;
+            docente.Salas = new Sala[] { };
             Docentes.Add(docente);
             Archivos.Instancia.ModificarArchivoDocentes(Docentes);
             UsuarioLogin usuario = ConvercionDeUsuario((Usuario)docente, Roles.Docente);
@@ -313,10 +315,75 @@ namespace Logica
         public Sala[] ObtenerSalasPorInstitucion()
         { return Archivos.Instancia.ObtenerSalas().ToArray(); }
 
-        
+        public Resultado MarcarNotaComoLeida(Nota nota, UsuarioLogueado usuarioLogueado)
+        {           
+            List<Hijo> hijos = Archivos.Instancia.ObtenerHijos();
+            Nota Nota = hijos.Find(x => x.Id == ObtenerPersonas(usuarioLogueado).ToList().Single(y => y.Notas.Contains(nota)).Id).Notas.Single(x => x.Id == nota.Id);
+            Nota.Leida = true;
+            Archivos.Instancia.ModificarArchivoHijos(hijos);
+            return new Resultado();
+        }
 
+        public Resultado AsignarHijoPadre(Hijo hijo, Padre padre)
+        {
+            List<Padre> padres = Archivos.Instancia.ObtenerPadres().ToList();
+            Padre PadreHijos = padres.Find(x => x.Id == padre.Id);
+            List<Hijo> Hijos = PadreHijos.Hijos is null ? new List<Hijo>() : PadreHijos.Hijos.ToList();
 
+            if (!Hijos.Any(x => x.Id == hijo.Id))
+            { Hijos.Add(hijo); }
+            PadreHijos.Hijos = Hijos.ToArray();
+            Archivos.Instancia.ModificarArchivoPadres(padres);
 
+            return new Resultado();
+        }
+
+        public Resultado DesasignarHijoPadre(Hijo hijo, Padre padre)
+        {
+            List<Padre> padres = Archivos.Instancia.ObtenerPadres();
+            Padre PadreHijos = Archivos.Instancia.ObtenerPadres().Find(x => x.Id == padre.Id);
+            List<Hijo> hijos = PadreHijos.Hijos.ToList();
+            hijos.RemoveAll(x => x.Id == hijo.Id);
+            PadreHijos.Hijos = hijos.ToArray();
+
+            Archivos.Instancia.ModificarArchivoPadres(padres);
+
+            return new Resultado();
+        }
+
+        public Resultado AsignarDocenteSala(Docente docente, Sala sala)
+        {
+            List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
+            Docente profesor = Docentes.Find(x => x.Id == docente.Id);
+            List<Sala> Salas = profesor.Salas is null ? new List<Sala>() : profesor.Salas.ToList();
+            if (!Salas.Any(x => x.Id == sala.Id))
+            { Salas.Add(sala); }
+            profesor.Salas = Salas.ToArray();
+            Archivos.Instancia.ModificarArchivoDocentes(Docentes);
+
+            return new Resultado();
+        }
+
+        public Resultado DesasignarDocenteSala(Docente docente, Sala sala)
+        {
+            List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
+            Docente profesor = Docentes.Find(x => x.Id == docente.Id);
+            List<Sala> salas = profesor.Salas.ToList();
+            salas.RemoveAll(x => x.Id == sala.Id);
+            profesor.Salas = salas.ToArray();
+            Archivos.Instancia.ModificarArchivoDocentes(Docentes);
+
+            return new Resultado();
+        }
+
+        public Resultado ResponderNota(Nota nota, Comentario nuevoComentario, UsuarioLogueado usuarioLogueado)
+        {
+            List<Hijo> hijos = Archivos.Instancia.ObtenerHijos();
+            Nota LaNota = hijos.Find(x => x.Id == ObtenerPersonas(usuarioLogueado).ToList().Single(y => y.Notas.Contains(nota)).Id).Notas.Single(x => x.Id == nota.Id);
+            LaNota.Comentarios[LaNota.Comentarios.Length] = nuevoComentario;
+            Archivos.Instancia.ModificarArchivoHijos(hijos);
+            return new Resultado();
+        }
 
     }
 }
