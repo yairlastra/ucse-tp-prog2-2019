@@ -44,7 +44,14 @@ namespace Logica
             {
                 case Roles.Padre:
                     Padre padre = Archivos.Instancia.ObtenerPadres().Find(x => x.Nombre == usuarioLogueado.Nombre && x.Apellido == usuarioLogueado.Apellido);
-                    return ListaHijos.Where(x => padre.Hijos.Contains(x)).ToArray();
+                    if (padre.Hijos == null)
+                    {
+                        return new Hijo[0];
+                    }
+                    else
+                    {
+                        return ListaHijos.Where(x => padre.Hijos.Contains(x)).ToArray();
+                    }
                 case Roles.Directora:
                     return ListaHijos.ToArray();
                 case Roles.Docente:
@@ -56,7 +63,7 @@ namespace Logica
         }
 
         public UsuarioLogueado ObtenerUsuario(string email, string clave)
-       {
+        {
             if (email == "" || clave == "")
             { return null; }
 
@@ -66,7 +73,7 @@ namespace Logica
             { return null; }
             else
             { return  ConvercionDeUsuario(usuario); }   
-       }
+        }
 
 
 

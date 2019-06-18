@@ -25,7 +25,11 @@ namespace Implementacion
         public Grilla<Hijo> ObtenerAlumnos(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
-            { throw new NotImplementedException(); }
+            {
+                
+
+                throw new NotImplementedException();
+            }
             else
             { return Principal.Instancia.ObtenerGrillaAlumnos(paginaActual, totalPorPagina, busquedaGlobal); }
         }
