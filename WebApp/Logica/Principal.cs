@@ -325,7 +325,7 @@ namespace Logica
         public Resultado MarcarNotaComoLeida(Nota nota, UsuarioLogueado usuarioLogueado)
         {           
             List<Hijo> hijos = Archivos.Instancia.ObtenerHijos();
-            Hijo hijo = hijos.Find(x => x.Id == ObtenerPersonas(usuarioLogueado).ToList().Single(y => y.Notas.Contains(nota)).Id);
+            Hijo hijo = hijos.Find(x => x.Id == ObtenerPersonas(usuarioLogueado).ToList().Single(y => y.Notas.Single(z => z.Id == nota.Id) != null).Id);
             Nota Nota = hijo.Notas.Single(x => x.Id == nota.Id);
             Nota.Leida = true;
             Archivos.Instancia.ModificarArchivoHijos(hijos);
