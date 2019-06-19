@@ -17,9 +17,6 @@ namespace Logica
 
         private Archivos() {  }
 
-
-
-
         private static readonly string RutaArchivoInstituciones = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"Instituciones.txt");
         private static readonly string RutaArchivoHijos = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Hijos.txt");
         private static readonly string RutaArchivoPadres = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Padres.txt");
@@ -27,9 +24,6 @@ namespace Logica
         private static readonly string RutaArchivoDirectoras = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Directoras.txt");
         private static readonly string RutaArchivoUsuarios = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Usuarios.txt");
         private static readonly string RutaArchivoSalas = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Salas.txt");
-
-
-
 
         public List<Institucion> ObtenerInstituciones()
         {
@@ -167,9 +161,6 @@ namespace Logica
             return Salas ?? new List<Sala> { };
         }
 
-
-
-
         public bool ModificarArchivoInstituciones(List<Institucion> Instituciones)
         {
             using (StreamWriter Escribir = new StreamWriter(RutaArchivoInstituciones, false))
@@ -229,7 +220,6 @@ namespace Logica
                 return true;
             }
         }
-
 
     }
 }

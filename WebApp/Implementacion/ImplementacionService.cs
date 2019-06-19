@@ -10,18 +10,6 @@ namespace Implementacion
 {
     public class ImplementacionService : IServicioWeb
     {
-
-
-
-
-
-        // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
-        // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
-        // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
-        // IMPLEMENTACIONES COMPLETADAS ****************************************************************************************************
-
-
-
         public Grilla<Hijo> ObtenerAlumnos(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
@@ -64,10 +52,6 @@ namespace Implementacion
         public Hijo[] ObtenerPersonas(UsuarioLogueado usuarioLogueado)
         { return Principal.Instancia.ObtenerPersonas(usuarioLogueado); }
 
-
-
-
-
         public Resultado EliminarAlumno(int id, Hijo hijo, UsuarioLogueado usuarioLogueado)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
@@ -100,10 +84,6 @@ namespace Implementacion
             { return Principal.Instancia.EliminarDirectora(id); }
         }
 
-
-
-
-
         public Resultado EditarAlumno(int id, Hijo hijo, UsuarioLogueado usuarioLogueado)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
@@ -135,10 +115,6 @@ namespace Implementacion
             else
             { return Principal.Instancia.EditarDirectora(id, directora); }
         }
-
-
-
-
 
         public Resultado AltaAlumno(Hijo hijo, UsuarioLogueado usuarioLogueado)
         {
@@ -184,10 +160,6 @@ namespace Implementacion
             { return Principal.Instancia.AltaNota(nota,salas,hijos); }
         }
 
-
-
-
-
         public Hijo ObtenerAlumnoPorId(UsuarioLogueado usuarioLogueado, int id)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora))
@@ -223,10 +195,6 @@ namespace Implementacion
         public Institucion[] ObtenerInstituciones()
         { return Principal.Instancia.ObtenerInstituciones(); }
 
-
-
-
-
         public string ObtenerNombreGrupo()
         { return $"Lastra - Belmonte - Balaudo"; }
 
@@ -245,10 +213,6 @@ namespace Implementacion
         {
             return Logica.Principal.Instancia.ResponderNota(nota, nuevoComentario, usuarioLogueado);
         }
-
-
-
-
 
         public Resultado AsignarHijoPadre(Hijo hijo, Padre padre, UsuarioLogueado usuarioLogueado)
         {
@@ -284,7 +248,6 @@ namespace Implementacion
 
         public Nota[] ObtenerCuadernoComunicaciones(int idPersona, UsuarioLogueado usuarioLogueado)
         { return Logica.Principal.Instancia.ObtenerPersonas(usuarioLogueado).First(x => x.Id == idPersona).Notas; }
-
 
     }
 }

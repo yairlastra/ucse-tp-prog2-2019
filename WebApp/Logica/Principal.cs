@@ -11,19 +11,14 @@ namespace Logica
 {
     public sealed class Principal
     {
-
         private readonly static Principal instancia = new Principal();
 
         public static Principal Instancia { get { return instancia; } }
 
         private Principal() { }
 
-
-
         public Institucion[] ObtenerInstituciones()
         { return Archivos.Instancia.ObtenerInstituciones().ToArray(); }
-
-
 
         public Hijo ObtenerAlumnoPorId(int id)
         { return Archivos.Instancia.ObtenerHijos().First(x => x.Id == id); }
@@ -68,51 +63,81 @@ namespace Logica
             { return  ConvercionDeUsuario(usuario); }   
         }
 
-
-
         public Resultado AltaHijo(Hijo hijo)
         {
-            List<Hijo> Hijos = Archivos.Instancia.ObtenerHijos().ToList();
-            hijo.Id = (Hijos.Count == 0 ? 0 : Hijos.Max(x => x.Id)) + 1;
-            hijo.Notas = new Nota[] {};
-            Hijos.Add(hijo);
-            Archivos.Instancia.ModificarArchivoHijos(Hijos);
-            return new Resultado();
+            var res = new Resultado();
+            if (ComprobarString(hijo.Apellido,false) && ComprobarString(hijo.Nombre,false) && ComprobarString(hijo.Email,true))
+            {
+                List<Hijo> Hijos = Archivos.Instancia.ObtenerHijos().ToList();
+                hijo.Id = (Hijos.Count == 0 ? 0 : Hijos.Max(x => x.Id)) + 1;
+                hijo.Notas = new Nota[] { };
+                Hijos.Add(hijo);
+                Archivos.Instancia.ModificarArchivoHijos(Hijos);
+            }
+            else
+            {
+                res.Errores.Add("Nombre, Apellido o Email incorrecto");
+            }
+            return res;
         }
 
         public Resultado AltaPadre(Padre padre)
         {
-            List<Padre> Padres = Archivos.Instancia.ObtenerPadres().ToList();
-            padre.Id = (Padres.Count == 0 ? 0 : Padres.Max(x => x.Id)) + 1;
-            padre.Hijos = new Hijo[] { };
-            Padres.Add(padre);
-            Archivos.Instancia.ModificarArchivoPadres(Padres);
-            UsuarioLogin usuario = ConvercionDeUsuario((Usuario)padre, Roles.Padre);
-            AltaUsuario(usuario);
-            return new Resultado();
+            var res = new Resultado();
+            if (ComprobarString(padre.Apellido, false) && ComprobarString(padre.Nombre, false) && ComprobarString(padre.Email, true))
+            {
+                List<Padre> Padres = Archivos.Instancia.ObtenerPadres().ToList();
+                padre.Id = (Padres.Count == 0 ? 0 : Padres.Max(x => x.Id)) + 1;
+                padre.Hijos = new Hijo[] { };
+                Padres.Add(padre);
+                Archivos.Instancia.ModificarArchivoPadres(Padres);
+                UsuarioLogin usuario = ConvercionDeUsuario((Usuario)padre, Roles.Padre);
+                AltaUsuario(usuario);
+            }
+            else
+            {
+                res.Errores.Add("Nombre, Apellido o Email incorrecto");
+            }
+            return res;
         }
 
         public Resultado AltaDocente(Docente docente)
         {
-            List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
-            docente.Id = (Docentes.Count == 0 ? 0 : Docentes.Max(x => x.Id)) + 1;
-            docente.Salas = new Sala[] { };
-            Docentes.Add(docente);
-            Archivos.Instancia.ModificarArchivoDocentes(Docentes);
-            UsuarioLogin usuario = ConvercionDeUsuario((Usuario)docente, Roles.Docente);
-            AltaUsuario(usuario);
-            return new Resultado();
+            var res = new Resultado();
+            if (ComprobarString(docente.Apellido, false) && ComprobarString(docente.Nombre, false) && ComprobarString(docente.Email, true))
+            {
+                List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
+                docente.Id = (Docentes.Count == 0 ? 0 : Docentes.Max(x => x.Id)) + 1;
+                docente.Salas = new Sala[] { };
+                Docentes.Add(docente);
+                Archivos.Instancia.ModificarArchivoDocentes(Docentes);
+                UsuarioLogin usuario = ConvercionDeUsuario((Usuario)docente, Roles.Docente);
+                AltaUsuario(usuario);
+            }
+            else
+            {
+                res.Errores.Add("Nombre, Apellido o Email incorrecto");
+            }
+            return res;
         }
 
         public Resultado AltaDirectora(Directora directora)
         {
-            List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras().ToList();
-            directora.Id = (Directoras.Count == 0 ? 0 : Directoras.Max(x => x.Id)) + 1;
-            Directoras.Add(directora);
-            Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
-            UsuarioLogin usuario = ConvercionDeUsuario((Usuario)directora, Roles.Directora);
-            AltaUsuario(usuario);
-            return new Resultado();
+            var res = new Resultado();
+            if (ComprobarString(directora.Apellido, false) && ComprobarString(directora.Nombre, false) && ComprobarString(directora.Email, true))
+            {
+                List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras().ToList();
+                directora.Id = (Directoras.Count == 0 ? 0 : Directoras.Max(x => x.Id)) + 1;
+                Directoras.Add(directora);
+                Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
+                UsuarioLogin usuario = ConvercionDeUsuario((Usuario)directora, Roles.Directora);
+                AltaUsuario(usuario);
+            }
+            else
+            {
+                res.Errores.Add("Nombre, Apellido o Email incorrecto");
+            }
+            return res;
         }
 
         public Resultado AltaNota(Nota nota, Sala[] salas, Hijo[] hijos)
@@ -161,46 +186,75 @@ namespace Logica
             Archivos.Instancia.ModificarArchivoUsuarios(usuarios);
         }
 
-
-
-
         public Resultado EditarHijo(int id, Hijo hijo)
         {
-            List<Hijo> Hijos = Archivos.Instancia.ObtenerHijos().ToList();
-            Hijos.RemoveAll(x => x.Id == id);
-            Hijos.Add(hijo);
-            Archivos.Instancia.ModificarArchivoHijos(Hijos);
-            return new Resultado();
+            var res = new Resultado();
+            if (ComprobarString(hijo.Apellido, false) && ComprobarString(hijo.Nombre, false) && ComprobarString(hijo.Email, true))
+            {
+                List<Hijo> Hijos = Archivos.Instancia.ObtenerHijos().ToList();
+                Hijos.RemoveAll(x => x.Id == id);
+                Hijos.Add(hijo);
+                Archivos.Instancia.ModificarArchivoHijos(Hijos);
+            }
+            else
+            {
+                res.Errores.Add("Nombre, Apellido o Email incorrecto");
+            }
+            return res;
         }
 
         public Resultado EditarPadre(int id, Padre padre)
         {
-            List<Padre> Padres = Archivos.Instancia.ObtenerPadres().ToList();
-            EditarUsuario((Usuario)padre, Padres.Find(x => x.Id == id).Email, Roles.Padre);
-            Padres.RemoveAll(x => x.Id == id);
-            Padres.Add(padre);
-            Archivos.Instancia.ModificarArchivoPadres(Padres);
-            return new Resultado();
+            var res = new Resultado();
+            if (ComprobarString(padre.Apellido, false) && ComprobarString(padre.Nombre, false) && ComprobarString(padre.Email, true))
+            {
+                List<Padre> Padres = Archivos.Instancia.ObtenerPadres().ToList();
+                EditarUsuario((Usuario)padre, Padres.Find(x => x.Id == id).Email, Roles.Padre);
+                Padres.RemoveAll(x => x.Id == id);
+                Padres.Add(padre);
+                Archivos.Instancia.ModificarArchivoPadres(Padres);
+            }
+            else
+            {
+                res.Errores.Add("Nombre, Apellido o Email incorrecto");
+            }
+            return res;
         }
 
         public Resultado EditarDocente(int id, Docente docente)
         {
-            List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
-            EditarUsuario((Usuario)docente, Docentes.Find(x => x.Id == id).Email, Roles.Docente);
-            Docentes.RemoveAll(x => x.Id == id);
-            Docentes.Add(docente);
-            Archivos.Instancia.ModificarArchivoDocentes(Docentes);
-            return new Resultado();
+            var res = new Resultado();
+            if (ComprobarString(docente.Apellido, false) && ComprobarString(docente.Nombre, false) && ComprobarString(docente.Email, true))
+            {
+                List<Docente> Docentes = Archivos.Instancia.ObtenerDocentes().ToList();
+                EditarUsuario((Usuario)docente, Docentes.Find(x => x.Id == id).Email, Roles.Docente);
+                Docentes.RemoveAll(x => x.Id == id);
+                Docentes.Add(docente);
+                Archivos.Instancia.ModificarArchivoDocentes(Docentes);
+            }
+            else
+            {
+                res.Errores.Add("Nombre, Apellido o Email incorrecto");
+            }
+            return res;
         }
 
         public Resultado EditarDirectora(int id, Directora directora)
         {
-            List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras().ToList();
-            EditarUsuario((Usuario)directora, Directoras.Find(x => x.Id == id).Email, Roles.Directora);
-            Directoras.RemoveAll(x => x.Id == id);
-            Directoras.Add(directora);
-            Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
-            return new Resultado();
+            var res = new Resultado();
+            if (ComprobarString(directora.Apellido, false) && ComprobarString(directora.Nombre, false) && ComprobarString(directora.Email, true))
+            {
+                List<Directora> Directoras = Archivos.Instancia.ObtenerDirectoras().ToList();
+                EditarUsuario((Usuario)directora, Directoras.Find(x => x.Id == id).Email, Roles.Directora);
+                Directoras.RemoveAll(x => x.Id == id);
+                Directoras.Add(directora);
+                Archivos.Instancia.ModificarArchivoDirectoras(Directoras);
+            }
+            else
+            {
+                res.Errores.Add("Nombre, Apellido o Email incorrecto");
+            }
+            return res;
         }
 
         private void EditarUsuario(Usuario usuario , string Email, Roles rol)
@@ -210,9 +264,6 @@ namespace Logica
             lista.Add(ConvercionDeUsuario(usuario, rol));
             Archivos.Instancia.ModificarArchivoUsuarios(lista);
         }
-
-
-
 
         public Resultado EliminarHijo(int id)
         {
@@ -260,9 +311,6 @@ namespace Logica
             Archivos.Instancia.ModificarArchivoUsuarios(lista);
         }
 
-
-
-
         public Grilla<Hijo> ObtenerGrillaAlumnos(int paginaActual, int totalPorPagina, string busquedaGlobal)
         {
             List<Hijo> hijos = Archivos.Instancia.ObtenerHijos();
@@ -307,17 +355,11 @@ namespace Logica
             };
         }
 
-
-
-
         private UsuarioLogin ConvercionDeUsuario(Usuario usuario , Roles rol)
         { return new UsuarioLogin(usuario.Id, usuario.Nombre, usuario.Apellido, usuario.Email, (new Random().Next(1000000)).ToString(), rol); }
 
         private UsuarioLogueado ConvercionDeUsuario(UsuarioLogin usuario)
         { return new UsuarioLogueado() { Email = usuario.Email, Nombre = usuario.Nombre, Apellido = usuario.Apellido, Roles = usuario.Roles , RolSeleccionado = usuario.Roles[0] }; }
-
-
-
 
         public Sala[] ObtenerSalasPorInstitucion()
         { return Archivos.Instancia.ObtenerSalas().ToArray(); }
@@ -395,5 +437,43 @@ namespace Logica
             return new Resultado();
         }
 
+        public bool ComprobarString(string texto, bool Mail)
+        {
+            bool res = true;
+            List<int> letras = new List<int>() {32,44,46};
+            var inicio = 65;
+            if (Mail)
+            {
+                inicio = 64;
+                for (int i = 48; i < 58; i++)
+                {
+                    letras.Add(i);
+                }
+            }
+            for (int i = inicio; i < 91; i++)
+            {
+                letras.Add(i);
+            }
+            for (int i = 97; i < 123; i++)
+            {
+                letras.Add(i);
+            }
+            for (int i = 129; i < 155; i++)
+            {
+                letras.Add(i);
+            }
+            for (int i = 160; i < 166; i++)
+            {
+                letras.Add(i);
+            }            
+            foreach (var item in texto)
+            {                
+                if (!letras.Contains((int)item))
+                {
+                    res = false;                    
+                }
+            }
+            return res;
+        }
     }
 }
