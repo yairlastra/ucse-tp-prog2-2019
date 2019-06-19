@@ -49,7 +49,7 @@ namespace Logica
                     return ListaHijos.ToArray();
                 case Roles.Docente:
                     Docente docente = Archivos.Instancia.ObtenerDocentes().Find(x => x.Nombre == usuarioLogueado.Nombre && x.Apellido == usuarioLogueado.Apellido);
-                    return ListaHijos.Where(x => docente.Salas.Single(y => y.Id == x.Sala.Id) != null).ToArray() ?? new Hijo[] { };
+                    return ListaHijos.Where(x => docente.Salas.Where(y => y.Id == x.Sala.Id).Count() != 0).ToArray() ?? new Hijo[] { };
                 default:
                     throw new Exception("Rol no implementado");
             }
