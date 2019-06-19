@@ -124,12 +124,12 @@ namespace Logica
         public Resultado AltaNota(Nota nota, Sala[] salas, Hijo[] hijos)
         {
             List<Hijo> ListaHijos = Archivos.Instancia.ObtenerHijos();
-
-            if (hijos == null || hijos.Length >= 0)
+            
+            if (hijos == null || hijos.Length == 0)
             {
                 hijos = new Hijo[] { };
                 foreach (var sala in salas)
-                { hijos.Concat(ListaHijos.Where(x => x.Sala.Id == sala.Id)); }
+                { hijos = ListaHijos.Where(x => x.Sala.Id == sala.Id).ToArray(); }
             }
 
             foreach (int id in hijos.ToList().Select(x => x.Id))
@@ -138,7 +138,13 @@ namespace Logica
                 if (hijo.Notas is null)
                 { hijo.Notas = new Nota[] { nota }; }
                 else
-                { hijo.Notas[hijo.Notas.Length] = nota; };
+                {
+                    List<Nota> Notas = hijo.Notas.ToList();
+                    nota.Id = hijo.Notas.Length;
+                    nota.FechaEventoAsociado = DateTime.Today;
+                    Notas.Add(nota);
+                    hijo.Notas = Notas.ToArray();
+                };
             }
 
             Archivos.Instancia.ModificarArchivoHijos(ListaHijos);
@@ -386,8 +392,10 @@ namespace Logica
         public Resultado ResponderNota(Nota nota, Comentario nuevoComentario, UsuarioLogueado usuarioLogueado)
         {
             List<Hijo> hijos = Archivos.Instancia.ObtenerHijos();
-            Nota LaNota = hijos.Find(x => x.Id == ObtenerPersonas(usuarioLogueado).ToList().Single(y => y.Notas.Contains(nota)).Id).Notas.Single(x => x.Id == nota.Id);
-            LaNota.Comentarios[LaNota.Comentarios.Length] = nuevoComentario;
+            Nota LaNota = hijos.Find(x => x.Id == ObtenerPersonas(usuarioLogueado).ToList().Single(y => y.Notas.Single(z => z.Id == nota.Id) != null).Id).Notas.Single(x => x.Id == nota.Id);
+            List<Comentario> Comentarios = LaNota.Comentarios.ToList();
+            Comentarios.Add(nuevoComentario);
+            LaNota.Comentarios = Comentarios.ToArray();
             Archivos.Instancia.ModificarArchivoHijos(hijos);
             return new Resultado();
         }
