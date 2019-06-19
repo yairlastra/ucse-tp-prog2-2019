@@ -59,12 +59,7 @@ namespace Logica
             List<Hijo> Hijos = new List<Hijo> { };
             if (!File.Exists(RutaArchivoHijos))
             {
-                //File.Create(RutaArchivoHijos);
-                using (StreamWriter Escribir = new StreamWriter(RutaArchivoHijos, false))
-                {
-                    string jsonHijos = JsonConvert.SerializeObject(Hijos);
-                    Escribir.Write(jsonHijos);
-                }
+                ModificarArchivoHijos(Hijos);
             }
             else
             {
@@ -82,12 +77,7 @@ namespace Logica
             List<Padre> Padres = new List<Padre> { };
             if (!File.Exists(RutaArchivoPadres))
             {
-                //File.Create(RutaArchivoPadres);
-                using (StreamWriter Escribir = new StreamWriter(RutaArchivoPadres, false))
-                {
-                    string jsonPadres = JsonConvert.SerializeObject(Padres);
-                    Escribir.Write(jsonPadres);                    
-                }
+                ModificarArchivoPadres(Padres);
             }
             else
             {
@@ -105,12 +95,7 @@ namespace Logica
             List<Docente> Docentes = new List<Docente> { };
             if (!File.Exists(RutaArchivoDocentes))
             {
-                //File.Create(RutaArchivoDocentes);
-                using (StreamWriter Escribir = new StreamWriter(RutaArchivoDocentes, false))
-                {
-                    string jsonDocentes = JsonConvert.SerializeObject(Docentes);
-                    Escribir.Write(jsonDocentes);
-                }
+                ModificarArchivoDocentes(Docentes);
             }
             else
             { 
@@ -128,12 +113,7 @@ namespace Logica
             List<Directora> Directoras = new List<Directora> { };
             if (!File.Exists(RutaArchivoDirectoras))
             {
-                //File.Create(RutaArchivoDirectoras);
-                using (StreamWriter Escribir = new StreamWriter(RutaArchivoDirectoras, false))
-                {
-                    string jsonDirectoras = JsonConvert.SerializeObject(Directoras);
-                    Escribir.Write(jsonDirectoras);
-                }
+                ModificarArchivoDirectoras(Directoras);
             }
             else
             {
@@ -151,12 +131,7 @@ namespace Logica
             List<UsuarioLogin> Usuarios = new List<UsuarioLogin> { };
             if (!File.Exists(RutaArchivoUsuarios))
             {
-                //File.Create(RutaArchivoUsuarios);
-                using (StreamWriter Escribir = new StreamWriter(RutaArchivoUsuarios, false))
-                {
-                    string jsonUsuarios = JsonConvert.SerializeObject(Usuarios);
-                    Escribir.Write(jsonUsuarios);                    
-                }
+                ModificarArchivoUsuarios(Usuarios);
             }
             else
             {
