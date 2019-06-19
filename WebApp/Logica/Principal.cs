@@ -440,39 +440,46 @@ namespace Logica
         public bool ComprobarString(string texto, bool Mail)
         {
             bool res = true;
-            List<int> letras = new List<int>() {32,44,46};
-            var inicio = 65;
-            if (Mail)
+            if (string.IsNullOrWhiteSpace(texto))
             {
-                inicio = 64;
-                for (int i = 48; i < 58; i++)
+                res = false;
+            }
+            else
+            {
+                List<int> letras = new List<int>() { 32, 44, 46 };
+                var inicio = 65;
+                if (Mail)
+                {
+                    inicio = 64;
+                    for (int i = 48; i < 58; i++)
+                    {
+                        letras.Add(i);
+                    }
+                }
+                for (int i = inicio; i < 91; i++)
                 {
                     letras.Add(i);
                 }
-            }
-            for (int i = inicio; i < 91; i++)
-            {
-                letras.Add(i);
-            }
-            for (int i = 97; i < 123; i++)
-            {
-                letras.Add(i);
-            }
-            for (int i = 129; i < 155; i++)
-            {
-                letras.Add(i);
-            }
-            for (int i = 160; i < 166; i++)
-            {
-                letras.Add(i);
-            }            
-            foreach (var item in texto)
-            {                
-                if (!letras.Contains((int)item))
+                for (int i = 97; i < 123; i++)
                 {
-                    res = false;                    
+                    letras.Add(i);
                 }
-            }
+                for (int i = 129; i < 155; i++)
+                {
+                    letras.Add(i);
+                }
+                for (int i = 160; i < 166; i++)
+                {
+                    letras.Add(i);
+                }
+                foreach (var item in texto)
+                {
+                    if (!letras.Contains((int)item))
+                    {
+                        res = false;
+                    }
+                }
+            }            
             return res;
         }
     }
