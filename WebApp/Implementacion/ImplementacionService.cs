@@ -175,7 +175,11 @@ namespace Implementacion
         public Resultado AltaNota(Nota nota, Sala[] salas, Hijo[] hijos, UsuarioLogueado usuarioLogueado)
         {
             if (!usuarioLogueado.Roles.Contains(Roles.Directora) && !usuarioLogueado.Roles.Contains(Roles.Docente))
-            { throw new NotImplementedException(); }
+            {
+                var res = new Resultado();
+                res.Errores.Add("No tiene permisos");
+                return res;
+            }
             else
             { return Principal.Instancia.AltaNota(nota,salas,hijos); }
         }
