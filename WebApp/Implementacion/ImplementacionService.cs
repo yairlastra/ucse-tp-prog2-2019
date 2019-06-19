@@ -174,7 +174,7 @@ namespace Implementacion
 
         public Resultado AltaNota(Nota nota, Sala[] salas, Hijo[] hijos, UsuarioLogueado usuarioLogueado)
         {
-            if (!usuarioLogueado.Roles.Contains(Roles.Directora))
+            if (!usuarioLogueado.Roles.Contains(Roles.Directora & Roles.Docente))
             { throw new NotImplementedException(); }
             else
             { return Principal.Instancia.AltaNota(nota,salas,hijos); }
