@@ -44,7 +44,7 @@ namespace Logica
             {
                 case Roles.Padre:
                     Padre padre = Archivos.Instancia.ObtenerPadres().Find(x => x.Nombre == usuarioLogueado.Nombre && x.Apellido == usuarioLogueado.Apellido);
-                    return padre.Hijos.Count() == 0 ? new Hijo[] { } :ListaHijos.Where(x => padre.Hijos.Single(y => y.Id == x.Id) != null).ToArray() ?? new Hijo[] { }; 
+                    return padre.Hijos.Count() == 0 ? new Hijo[] { } :ListaHijos.Where(x => padre.Hijos.Where(y => y.Id == x.Id).Count() == 0).ToArray() ?? new Hijo[] { }; 
                 case Roles.Directora:
                     return ListaHijos.ToArray();
                 case Roles.Docente:
