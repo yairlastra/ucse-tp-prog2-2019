@@ -157,7 +157,12 @@ namespace Implementacion
                 return res;
             }
             else
-            { return Principal.Instancia.AltaNota(nota,salas,hijos); }
+            {
+                if (string.IsNullOrWhiteSpace(nota.Titulo))
+                { return new Resultado() { Errores = new List<string>() { "La nota no contiene titulo" } }; }
+                else
+                { return Principal.Instancia.AltaNota(nota, salas, hijos); }
+            }
         }
 
         public Hijo ObtenerAlumnoPorId(UsuarioLogueado usuarioLogueado, int id)
