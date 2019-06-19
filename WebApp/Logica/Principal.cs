@@ -44,12 +44,12 @@ namespace Logica
             {
                 case Roles.Padre:
                     Padre padre = Archivos.Instancia.ObtenerPadres().Find(x => x.Nombre == usuarioLogueado.Nombre && x.Apellido == usuarioLogueado.Apellido);
-                    return padre.Hijos == null ? new Hijo[] { } :ListaHijos.Where(x => padre.Hijos.Single(y => y.Id == x.Id) != null).ToArray(); 
+                    return padre.Hijos == null ? new Hijo[] { } :ListaHijos.Where(x => padre.Hijos.Single(y => y.Id == x.Id) != null).ToArray() ?? new Hijo[] { }; 
                 case Roles.Directora:
                     return ListaHijos.ToArray();
                 case Roles.Docente:
                     Docente docente = Archivos.Instancia.ObtenerDocentes().Find(x => x.Nombre == usuarioLogueado.Nombre && x.Apellido == usuarioLogueado.Apellido);
-                    return ListaHijos.Where(x => docente.Salas.Single(y => y.Id == x.Sala.Id) != null).ToArray();
+                    return ListaHijos.Where(x => docente.Salas.Single(y => y.Id == x.Sala.Id) != null).ToArray() ?? new Hijo[] { };
                 default:
                     throw new Exception("Rol no implementado");
             }
