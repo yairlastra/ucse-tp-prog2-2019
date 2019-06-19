@@ -44,19 +44,12 @@ namespace Logica
             {
                 case Roles.Padre:
                     Padre padre = Archivos.Instancia.ObtenerPadres().Find(x => x.Nombre == usuarioLogueado.Nombre && x.Apellido == usuarioLogueado.Apellido);
-                    if (padre.Hijos == null)
-                    {
-                        return new Hijo[0];
-                    }
-                    else
-                    {
-                        return ListaHijos.Where(x => padre.Hijos.Contains(x)).ToArray();
-                    }
+                    return padre.Hijos == null ? new Hijo[] { } :ListaHijos.Where(x => padre.Hijos.Single(y => y.Id == x.Id) != null).ToArray(); 
                 case Roles.Directora:
                     return ListaHijos.ToArray();
                 case Roles.Docente:
                     Docente docente = Archivos.Instancia.ObtenerDocentes().Find(x => x.Nombre == usuarioLogueado.Nombre && x.Apellido == usuarioLogueado.Apellido);
-                    return ListaHijos.Where(x => docente.Salas.Contains(x.Sala)).ToArray();
+                    return ListaHijos.Where(x => docente.Salas.Single(y => y.Id == x.Sala.Id) != null).ToArray();
                 default:
                     throw new Exception("Rol no implementado");
             }
@@ -91,6 +84,7 @@ namespace Logica
         {
             List<Padre> Padres = Archivos.Instancia.ObtenerPadres().ToList();
             padre.Id = (Padres.Count == 0 ? 0 : Padres.Max(x => x.Id)) + 1;
+            padre.Hijos = new Hijo[] { };
             Padres.Add(padre);
             Archivos.Instancia.ModificarArchivoPadres(Padres);
             UsuarioLogin usuario = ConvercionDeUsuario((Usuario)padre, Roles.Padre);
@@ -331,7 +325,8 @@ namespace Logica
         public Resultado MarcarNotaComoLeida(Nota nota, UsuarioLogueado usuarioLogueado)
         {           
             List<Hijo> hijos = Archivos.Instancia.ObtenerHijos();
-            Nota Nota = hijos.Find(x => x.Id == ObtenerPersonas(usuarioLogueado).ToList().Single(y => y.Notas.Contains(nota)).Id).Notas.Single(x => x.Id == nota.Id);
+            Hijo hijo = hijos.Find(x => x.Id == ObtenerPersonas(usuarioLogueado).ToList().Single(y => y.Notas.Contains(nota)).Id);
+            Nota Nota = hijo.Notas.Single(x => x.Id == nota.Id);
             Nota.Leida = true;
             Archivos.Instancia.ModificarArchivoHijos(hijos);
             return new Resultado();
