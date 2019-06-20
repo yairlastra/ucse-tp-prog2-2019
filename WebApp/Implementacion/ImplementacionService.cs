@@ -8,6 +8,9 @@ using Logica;
 
 namespace Implementacion
 {
+    //PARA TODOS LOS METODOS.
+    //Si el rol del usuario no es valido, en vez de lanzar NotImplementedException, deberian lanzar una Excepcion de un tipo mas acorde
+    //Por ejemplo generar una clase nueva SinPermisosException : Exception para que quien la capture sepa que error realmente se produjo.
     public class ImplementacionService : IServicioWeb
     {
         public Grilla<Hijo> ObtenerAlumnos(UsuarioLogueado usuarioLogueado, int paginaActual, int totalPorPagina, string busquedaGlobal)

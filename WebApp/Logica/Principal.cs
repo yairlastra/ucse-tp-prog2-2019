@@ -9,7 +9,7 @@ using Contratos;
 
 namespace Logica
 {
-    public sealed class Principal
+    public sealed class Principal //BIEN!
     {
         private readonly static Principal instancia = new Principal();
 
@@ -32,6 +32,7 @@ namespace Logica
         public Directora ObtenerDirectoraPorId(int id)
         { return Archivos.Instancia.ObtenerDirectoras().First(x => x.Id == id); }
 
+
         public Hijo[] ObtenerPersonas(UsuarioLogueado usuarioLogueado)
         {
             List<Hijo> ListaHijos = Archivos.Instancia.ObtenerHijos();
@@ -39,7 +40,7 @@ namespace Logica
             {
                 case Roles.Padre:
                     Padre padre = Archivos.Instancia.ObtenerPadres().Find(x => x.Nombre == usuarioLogueado.Nombre && x.Apellido == usuarioLogueado.Apellido);
-                    return padre.Hijos.Count() == 0 ? new Hijo[] { } :ListaHijos.Where(x => padre.Hijos.Where(y => y.Id == x.Id).Count() != 0).ToArray() ?? new Hijo[] { }; 
+                    return padre.Hijos.Count() == 0 ? new Hijo[] { } :ListaHijos.Where(x => padre.Hijos.Where(y => y.Id == x.Id).Count() != 0).ToArray() ?? new Hijo[] { }; //Where().ToArray() nunca retorna null sino un array vacio asi que la pregunta es innecesaria
                 case Roles.Directora:
                     return ListaHijos.ToArray();
                 case Roles.Docente:
@@ -96,7 +97,7 @@ namespace Logica
             }
             else
             {
-                res.Errores.Add("Nombre, Apellido o Email incorrecto");
+                res.Errores.Add("Nombre, Apellido o Email incorrecto"); //Estaria bueno indicar especificamente cual da error y que error tiene asi el usuario sabe y lo corrige mas facil.
             }
             return res;
         }
@@ -140,6 +141,7 @@ namespace Logica
             return res;
         }
 
+        //Bien resuelto
         public Resultado AltaNota(Nota nota, Sala[] salas, Hijo[] hijos)
         {
             List<Hijo> ListaHijos = Archivos.Instancia.ObtenerHijos();
@@ -437,6 +439,7 @@ namespace Logica
             return new Resultado();
         }
 
+        //La comprobacion del mail se hace de otra manera, usando MailAddress o bien una Regex (expresion regular)
         public bool ComprobarString(string texto, bool Mail)
         {
             bool res = true;
